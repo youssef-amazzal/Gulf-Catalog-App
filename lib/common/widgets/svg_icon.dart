@@ -3,19 +3,23 @@ import 'package:flutter_svg/svg.dart';
 
 class SvgIcon extends StatelessWidget {
   final String icon;
-  final Color color;
   final double height;
+  final Color? color;
 
   const SvgIcon({
     required this.icon,
-    required this.color,
     required this.height,
+    this.color,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(icon,
-        height: height, colorFilter: ColorFilter.mode(color, BlendMode.srcIn));
+    return SvgPicture.asset(
+      icon,
+      height: height,
+      colorFilter:
+          color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
+    );
   }
 }
