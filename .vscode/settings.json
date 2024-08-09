@@ -1,0 +1,35 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true,
+        ".idea": true,
+        ".vscode": true,
+        "android": true,
+        "build": true,
+        "ios": true,
+        "linux": true,
+        "macos": true,
+        "web": true,
+        "windows": true
+    },
+    "hide-files.files": [
+        ".idea",
+        ".vscode",
+        "android",
+        "build",
+        "ios",
+        "linux",
+        "macos",
+        "web",
+        "windows"
+    ],
+    "svg.preview.background": "dark-transparent"
+}
