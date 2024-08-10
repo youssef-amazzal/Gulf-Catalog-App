@@ -4,7 +4,8 @@ import 'package:gulf_catalog_app/core/configs/theme/app_colors.dart';
 import '../widgets/top_navbar/navbar.dart';
 
 class MainLayout extends StatelessWidget {
-  const MainLayout({super.key});
+  final Widget child;
+  const MainLayout({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -13,27 +14,12 @@ class MainLayout extends StatelessWidget {
         color: AppColors.dark4,
       ),
       Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
         child: Column(children: [
           const TopNavBar(),
-          SizedBox(
-            height: 50,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(),
-                )
-              ],
-            ),
-          ),
+          const SizedBox(height: 30),
           Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(),
-                )
-              ],
-            ),
+            child: child,
           )
         ]),
       )
