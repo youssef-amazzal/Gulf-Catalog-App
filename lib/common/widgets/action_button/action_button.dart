@@ -31,27 +31,31 @@ class ActionButton extends StatelessWidget {
             ? theme.appColors.onAccent
             : theme.appColors.onSurfaceSecondary);
 
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: buildButtonStyle(onSurfaceColor, surfaceColor),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (icon != null)
-            SvgIcon(icon: icon!, color: onSurfaceColor, height: 24),
-          if (icon != null && text != null) const SizedBox(width: 10),
-          if (text != null)
-            Text(text!,
-                style: AppTypography.body1.copyWith(color: onSurfaceColor)),
-        ],
+    return ConditionalAspectRatio(
+      condition: text == null,
+      aspectRatio: 1,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: buildButtonStyle(onSurfaceColor, surfaceColor),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null)
+              SvgIcon(icon: icon!, color: onSurfaceColor, height: 24),
+            if (icon != null && text != null) const SizedBox(width: 10),
+            if (text != null)
+              Text(text!,
+                  style: AppTypography.body1.copyWith(color: onSurfaceColor)),
+          ],
+        ),
       ),
     );
   }
 
   ButtonStyle buildButtonStyle(Color onSurfaceColor, Color surfaceColor) {
     return ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        padding: EdgeInsets.symmetric(
+            vertical: text == null ? 0 : 15, horizontal: text == null ? 0 : 10),
         shape: RoundedRectangleBorder(
           side: BorderSide(
               color: isOutlined ? onSurfaceColor : Colors.transparent,
@@ -61,5 +65,30 @@ class ActionButton extends StatelessWidget {
         backgroundColor: surfaceColor,
         foregroundColor: onSurfaceColor,
         elevation: 0);
+  }
+}
+
+class ConditionalAspectRatio extends StatelessWidget {
+  final double aspectRatio;
+  final bool condition;
+  final Widget child;
+
+  const ConditionalAspectRatio({
+    super.key,
+    required this.aspectRatio,
+    required this.condition,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (condition) {
+      return AspectRatio(
+        aspectRatio: aspectRatio,
+        child: child,
+      );
+    } else {
+      return child;
+    }
   }
 }
