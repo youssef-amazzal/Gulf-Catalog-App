@@ -30,9 +30,9 @@ class ActionButton extends StatelessWidget {
             ? theme.appColors.onAccent
             : theme.appColors.onSurfaceSecondary);
 
-    return ConditionalAspectRatio(
-      condition: text == null,
-      aspectRatio: 1,
+    return SizedBox(
+      height: 45,
+      width: icon == null ? null : 45,
       child: ElevatedButton(
         onPressed: onPressed,
         style: buildButtonStyle(onSurfaceColor, surfaceColor),
@@ -55,40 +55,15 @@ class ActionButton extends StatelessWidget {
   ButtonStyle buildButtonStyle(Color onSurfaceColor, Color surfaceColor) {
     return ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(
-            vertical: text == null ? 0 : 15, horizontal: text == null ? 0 : 10),
+            vertical: text == null ? 0 : 10, horizontal: text == null ? 0 : 20),
         shape: RoundedRectangleBorder(
           side: BorderSide(
               color: isOutlined ? onSurfaceColor : Colors.transparent,
               width: 1.5),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(14),
         ),
         backgroundColor: surfaceColor,
         foregroundColor: onSurfaceColor,
         elevation: 0);
-  }
-}
-
-class ConditionalAspectRatio extends StatelessWidget {
-  final double aspectRatio;
-  final bool condition;
-  final Widget child;
-
-  const ConditionalAspectRatio({
-    super.key,
-    required this.aspectRatio,
-    required this.condition,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (condition) {
-      return AspectRatio(
-        aspectRatio: aspectRatio,
-        child: child,
-      );
-    } else {
-      return child;
-    }
   }
 }

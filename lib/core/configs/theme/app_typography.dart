@@ -11,8 +11,8 @@ abstract class AppTypography {
   );
 
   static const h1 = TextStyle(
-    fontSize: 30,
-    fontWeight: FontWeight.w700,
+    fontSize: 32,
+    fontWeight: FontWeight.w900,
     fontFamily: _fontFamily,
     decoration: TextDecoration.none,
   );

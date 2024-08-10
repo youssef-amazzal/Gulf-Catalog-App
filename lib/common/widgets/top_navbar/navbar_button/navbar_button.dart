@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gulf_catalog_app/common/widgets/svg_icon.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
-import 'package:gulf_catalog_app/core/configs/theme/app_typography.dart';
 
 class NavBarButton extends StatelessWidget {
   final String icon;

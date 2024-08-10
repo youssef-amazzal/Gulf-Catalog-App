@@ -89,23 +89,23 @@ flutter:
   fonts:
     - family: GreycliffCF
       fonts:
-        - asset: assets/fonts/Greycliff CF/GreycliffCF-heavy.otf
+        - asset: assets/fonts/Greycliff CF/GreycliffCF-Heavy.woff2
           weight: 900
-        - asset: assets/fonts/Greycliff CF/GreycliffCF-extrabold.otf
+        - asset: assets/fonts/Greycliff CF/GreycliffCF-ExtraBold.woff2
           weight: 800
-        - asset: assets/fonts/Greycliff CF/GreycliffCF-bold.otf
+        - asset: assets/fonts/Greycliff CF/GreycliffCF-Bold.woff2
           weight: 700
-        - asset: assets/fonts/Greycliff CF/GreycliffCF-demibold.otf
+        - asset: assets/fonts/Greycliff CF/GreycliffCF-DemiBold.woff2
           weight: 600
-        - asset: assets/fonts/Greycliff CF/GreycliffCF-medium.otf
+        - asset: assets/fonts/Greycliff CF/GreycliffCF-Medium.woff2
           weight: 500
-        - asset: assets/fonts/Greycliff CF/GreycliffCF-regular.otf
+        - asset: assets/fonts/Greycliff CF/GreycliffCF-Regular.woff2
           weight: 400
-        - asset: assets/fonts/Greycliff CF/GreycliffCF-light.otf
+        - asset: assets/fonts/Greycliff CF/GreycliffCF-Light.woff2
           weight: 300
-        - asset: assets/fonts/Greycliff CF/GreycliffCF-extralight.otf
+        - asset: assets/fonts/Greycliff CF/GreycliffCF-ExtraLight.woff2
           weight: 200
-        - asset: assets/fonts/Greycliff CF/GreycliffCF-thin.otf
+        - asset: assets/fonts/Greycliff CF/GreycliffCF-Thin.woff2
           weight: 100
   #
   # For details regarding fonts from package dependencies,
