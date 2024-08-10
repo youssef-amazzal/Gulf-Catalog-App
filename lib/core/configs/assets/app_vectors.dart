@@ -6,4 +6,5 @@ class AppVectors {
   static const String dashboard = '${basePath}dashboard$format';
   static const String settings = '${basePath}settings$format';
   static const String client = '${basePath}client$format';
+  static const String bell = '${basePath}bell$format';
 }

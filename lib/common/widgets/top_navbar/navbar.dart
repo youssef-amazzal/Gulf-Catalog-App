@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
-import 'package:gulf_catalog_app/common/bloc/theme_cubit.dart';
 import 'package:gulf_catalog_app/common/widgets/action_button/action_button.dart';
 import 'package:gulf_catalog_app/common/widgets/svg_icon.dart';
 import 'package:gulf_catalog_app/core/configs/assets/app_vectors.dart';
-import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 
 import 'navbar_button/navbar_button.dart';
 
@@ -29,7 +26,7 @@ class TopNavBar extends StatelessWidget {
           controller: controller,
           buttons: [
             MyItem(
-              name: 'Home',
+              name: 'Catalog',
               icon: AppVectors.home,
             ),
             MyItem(name: 'Dashboard', icon: AppVectors.dashboard),
@@ -48,8 +45,13 @@ class TopNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             ActionButton(
-              onPressed: () => {context.read<ThemeCubit>().toggleTheme()},
+              onPressed: () => {},
               icon: AppVectors.settings,
+            ),
+            const SizedBox(width: 10),
+            ActionButton(
+              onPressed: () => {},
+              icon: AppVectors.bell,
             ),
           ],
         ))

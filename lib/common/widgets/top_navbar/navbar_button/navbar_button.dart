@@ -36,10 +36,9 @@ class NavBarButton extends StatelessWidget {
               height: 18), // icon: height
           const SizedBox(width: 10), // spacing
           Text(text,
-              style: AppTypography.body1.copyWith(
-                  color: isSelected
-                      ? theme.appColors.onSurfacePrimary
-                      : theme.appColors.onSurfaceSecondary)),
+              style: isSelected
+                  ? theme.appTextStyles.body1
+                  : theme.appTextStyles.bodyAlt1),
         ],
       ),
     );
