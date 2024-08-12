@@ -22,7 +22,11 @@ class TopNavBar extends StatelessWidget {
     return SizedBox(
       height: 50,
       child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        const SvgIcon(icon: AppVectors.logo, height: 40),
+        SvgIcon(
+            icon: theme.brightness == Brightness.dark
+                ? AppVectors.darkLogo
+                : AppVectors.lightLogo,
+            height: 40),
         const Spacer(),
         BackButtonListener(
           onBackButtonPressed: () =>

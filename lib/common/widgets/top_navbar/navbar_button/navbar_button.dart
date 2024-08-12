@@ -22,7 +22,7 @@ class NavBarButton extends StatelessWidget {
       decoration: BoxDecoration(
           color: isSelected ? theme.appColors.surface2 : Colors.transparent,
           border: Border.all(
-              color: theme.appColors.border, width: 2), // border: width, radius
+              color: theme.appColors.border, width: 1), // border: width, radius
           borderRadius: BorderRadius.circular(100)),
       padding:
           const EdgeInsets.symmetric(vertical: 5, horizontal: 20), // padding
