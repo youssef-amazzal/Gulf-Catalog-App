@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gulf_catalog_app/core/configs/theme/app_colors.dart';
-
-import '../widgets/top_navbar/navbar.dart';
+import 'package:gap/gap.dart';
+import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
+import 'package:gulf_catalog_app/common/widgets/top_navbar/navbar.dart';
 
 class MainLayout extends StatelessWidget {
   final Widget child;
@@ -9,20 +9,23 @@ class MainLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(fit: StackFit.expand, children: [
-      Container(
-        color: AppColors.dark4,
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-        child: Column(children: [
-          const TopNavBar(),
-          const SizedBox(height: 30),
-          Expanded(
-            child: child,
-          )
-        ]),
-      )
-    ]);
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(fit: StackFit.expand, children: [
+        Container(
+          color: context.theme.appColors.background,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+          child: Column(children: [
+            const TopNavBar(),
+            const Gap(30),
+            Expanded(
+              child: child,
+            )
+          ]),
+        )
+      ]),
+    );
   }
 }

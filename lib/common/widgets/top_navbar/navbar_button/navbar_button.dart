@@ -25,7 +25,7 @@ class NavBarButton extends StatelessWidget {
               color: theme.appColors.border, width: 1), // border: width, radius
           borderRadius: BorderRadius.circular(100)),
       padding:
-          const EdgeInsets.symmetric(vertical: 5, horizontal: 20), // padding
+          const EdgeInsets.symmetric(vertical: 5, horizontal: 20), // paddingc
       child: Row(
         children: [
           SvgIcon(
