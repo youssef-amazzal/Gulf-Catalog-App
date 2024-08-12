@@ -11,7 +11,8 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     required this.surface2,
     required this.surface3,
     required this.onSurfacePrimary,
-    required this.onSurfaceSecondary,
+    required this.onSurfaceSecondary1,
+    required this.onSurfaceSecondary2,
     required this.border,
   });
 
@@ -24,7 +25,8 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
   final Color surface2;
   final Color surface3;
   final Color onSurfacePrimary;
-  final Color onSurfaceSecondary;
+  final Color onSurfaceSecondary1;
+  final Color onSurfaceSecondary2;
   final Color border;
 
   @override
@@ -38,7 +40,8 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     Color? surface2,
     Color? surface3,
     Color? onSurfacePrimary,
-    Color? onSurfaceSecondary,
+    Color? onSurfaceSecondary1,
+    Color? onSurfaceSecondary2,
     Color? border,
   }) {
     return AppColorsExtension(
@@ -51,7 +54,8 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
       surface2: surface2 ?? this.surface2,
       surface3: surface3 ?? this.surface3,
       onSurfacePrimary: onSurfacePrimary ?? this.onSurfacePrimary,
-      onSurfaceSecondary: onSurfaceSecondary ?? this.onSurfaceSecondary,
+      onSurfaceSecondary1: onSurfaceSecondary1 ?? this.onSurfaceSecondary1,
+      onSurfaceSecondary2: onSurfaceSecondary2 ?? this.onSurfaceSecondary2,
       border: border ?? this.border,
     );
   }
@@ -76,8 +80,10 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
       surface3: Color.lerp(surface3, other.surface3, t)!,
       onSurfacePrimary:
           Color.lerp(onSurfacePrimary, other.onSurfacePrimary, t)!,
-      onSurfaceSecondary:
-          Color.lerp(onSurfaceSecondary, other.onSurfaceSecondary, t)!,
+      onSurfaceSecondary1:
+          Color.lerp(onSurfaceSecondary1, other.onSurfaceSecondary1, t)!,
+      onSurfaceSecondary2:
+          Color.lerp(onSurfaceSecondary2, other.onSurfaceSecondary2, t)!,
       border: Color.lerp(border, other.border, t)!,
     );
   }

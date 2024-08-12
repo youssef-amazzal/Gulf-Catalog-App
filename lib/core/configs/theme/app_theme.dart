@@ -13,24 +13,25 @@ class AppTheme {
   );
 
   static final _lightAppColors = AppColorsExtension(
-    accent: const Color(0xff6200ee),
-    onAccent: Colors.white,
+    accent: AppColors.lightAccent,
+    onAccent: AppColors.white,
     error: const Color(0xffb00020),
     onError: Colors.white,
-    background: Colors.white,
-    surface1: Colors.white,
-    surface2: Colors.white,
-    surface3: Colors.white,
+    background: AppColors.light4,
+    surface1: AppColors.light3,
+    surface2: AppColors.light2,
+    surface3: AppColors.light1,
     onSurfacePrimary: Colors.black,
-    onSurfaceSecondary: Colors.black,
-    border: Colors.black,
+    onSurfaceSecondary1: AppColors.lightGrey1,
+    onSurfaceSecondary2: AppColors.lightGrey2,
+    border: AppColors.light0,
   );
 
   static final _lightTextStyle = AppTypographyExtension(
       body1:
           AppTypography.body1.copyWith(color: _lightAppColors.onSurfacePrimary),
       bodyAlt1: AppTypography.body1
-          .copyWith(color: _lightAppColors.onSurfaceSecondary),
+          .copyWith(color: _lightAppColors.onSurfaceSecondary1),
       h1: AppTypography.h1.copyWith(color: _lightAppColors.onSurfacePrimary));
 
   static final dark = ThemeData.dark().copyWith(
@@ -38,7 +39,7 @@ class AppTheme {
   );
 
   static final _darkAppColors = AppColorsExtension(
-    accent: AppColors.accent,
+    accent: AppColors.darkAccent,
     onAccent: AppColors.black,
     error: const Color(0xffcf6679),
     onError: AppColors.black,
@@ -47,15 +48,16 @@ class AppTheme {
     surface2: AppColors.dark2,
     surface3: AppColors.dark1,
     onSurfacePrimary: Colors.white,
-    onSurfaceSecondary: AppColors.grey,
-    border: AppColors.dark2,
+    onSurfaceSecondary1: AppColors.darkGrey1,
+    onSurfaceSecondary2: AppColors.darkGrey2,
+    border: AppColors.dark0,
   );
 
   static final _darkTextStyle = AppTypographyExtension(
       body1:
           AppTypography.body1.copyWith(color: _darkAppColors.onSurfacePrimary),
       bodyAlt1: AppTypography.body1
-          .copyWith(color: _darkAppColors.onSurfaceSecondary),
+          .copyWith(color: _darkAppColors.onSurfaceSecondary1),
       h1: AppTypography.h1.copyWith(color: _darkAppColors.onSurfacePrimary));
 }
 

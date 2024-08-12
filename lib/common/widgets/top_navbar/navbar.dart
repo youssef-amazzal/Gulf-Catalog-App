@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:group_button/group_button.dart';
 import 'package:gulf_catalog_app/common/widgets/action_button/action_button.dart';
 import 'package:gulf_catalog_app/common/widgets/svg_icon.dart';
 import 'package:gulf_catalog_app/core/configs/assets/app_vectors.dart';
+import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 
 import 'navbar_button/navbar_button.dart';
 
@@ -16,6 +18,7 @@ class TopNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = GroupButtonController();
     controller.selectIndex(0);
+    final ThemeData theme = context.theme;
     return SizedBox(
       height: 50,
       child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -41,12 +44,13 @@ class TopNavBar extends StatelessWidget {
         ActionButton(
           onPressed: () => {},
           icon: AppVectors.settings,
+          iconColor: theme.appColors.onSurfaceSecondary2,
         ),
-        const SizedBox(width: 10),
+        const Gap(10),
         ActionButton(
-          onPressed: () => {},
-          icon: AppVectors.bell,
-        )
+            onPressed: () => {},
+            icon: AppVectors.bell,
+            iconColor: theme.appColors.onSurfaceSecondary2)
       ]),
     );
   }

@@ -45,7 +45,7 @@ dependencies:
   intl: any
   popover: ^0.3.0+1
   group_button: ^5.3.4
-
+  gap: ^3.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

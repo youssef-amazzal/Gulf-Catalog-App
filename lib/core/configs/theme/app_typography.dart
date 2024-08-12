@@ -5,7 +5,7 @@ abstract class AppTypography {
 
   static const body1 = TextStyle(
     fontSize: 16,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.bold,
     fontFamily: _fontFamily,
     decoration: TextDecoration.none,
   );

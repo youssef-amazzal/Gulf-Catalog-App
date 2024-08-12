@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:gulf_catalog_app/common/widgets/svg_icon.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 
@@ -31,9 +32,9 @@ class NavBarButton extends StatelessWidget {
               icon: icon,
               color: isSelected
                   ? theme.appColors.accent
-                  : theme.appColors.onSurfaceSecondary,
+                  : theme.appColors.onSurfaceSecondary1,
               height: 18), // icon: height
-          const SizedBox(width: 10), // spacing
+          const Gap(10), // spacing
           Text(text,
               style: isSelected
                   ? theme.appTextStyles.body1

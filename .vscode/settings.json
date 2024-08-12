@@ -15,7 +15,6 @@
         "android": true,
         "build": true,
         "ios": true,
-        "linux": true,
         "macos": true,
         "web": true,
         "windows": true
@@ -26,7 +25,6 @@
         "android",
         "build",
         "ios",
-        "linux",
         "macos",
         "web",
         "windows"

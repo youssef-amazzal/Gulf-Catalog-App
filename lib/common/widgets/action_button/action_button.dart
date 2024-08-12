@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:gulf_catalog_app/common/widgets/svg_icon.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 
 class ActionButton extends StatelessWidget {
   final String? text;
   final String? icon;
-  final Color? color;
+  final Color? iconColor;
+  final double? iconSize;
+  final Color? fillColor;
   final bool isOutlined;
   final Function() onPressed;
 
@@ -13,7 +16,9 @@ class ActionButton extends StatelessWidget {
     super.key,
     this.text,
     this.icon,
-    this.color,
+    this.iconColor,
+    this.iconSize,
+    this.fillColor,
     this.isOutlined = false,
     required this.onPressed,
   });
@@ -22,13 +27,13 @@ class ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = context.theme;
     Color surfaceColor =
-        isOutlined ? Colors.transparent : color ?? theme.appColors.surface2;
+        isOutlined ? Colors.transparent : fillColor ?? theme.appColors.surface2;
 
     Color onSurfaceColor = isOutlined
-        ? color ?? theme.appColors.onSurfaceSecondary
-        : (color != null
+        ? fillColor ?? theme.appColors.onSurfaceSecondary1
+        : (fillColor != null
             ? theme.appColors.onAccent
-            : theme.appColors.onSurfaceSecondary);
+            : theme.appColors.onSurfaceSecondary1);
 
     return SizedBox(
       height: 45,
@@ -40,12 +45,15 @@ class ActionButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (icon != null)
-              SvgIcon(icon: icon!, color: onSurfaceColor, height: 24),
-            if (icon != null && text != null) const SizedBox(width: 10),
+              SvgIcon(
+                  icon: icon!,
+                  color: iconColor ?? onSurfaceColor,
+                  height: iconSize ?? 24),
+            if (icon != null && text != null) const Gap(10),
             if (text != null)
               Text(text!,
-                  style: theme.appTextStyles.body1
-                      .copyWith(color: onSurfaceColor)),
+                  style: theme.appTextStyles.body1.copyWith(
+                      color: onSurfaceColor, fontWeight: FontWeight.w700)),
           ],
         ),
       ),
