@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:gulf_catalog_app/common/layout/main_layout.dart';
 import 'package:gulf_catalog_app/presentation/catalog/catalog.dart';
 import 'package:gulf_catalog_app/presentation/dashboard/dashboard.dart';
+import 'package:gulf_catalog_app/presentation/product_details/product_details.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -17,11 +18,16 @@ final GoRouter appRoutes = GoRouter(navigatorKey: _rootNavigatorKey, routes: [
           redirect: (_, __) async => '/catalog',
         ),
         GoRoute(
-          path: '/catalog',
-          name: 'catalog',
-          parentNavigatorKey: _shellNavigatorKey,
-          builder: (context, state) => const CatalogPage(),
-        ),
+            path: '/catalog',
+            name: 'catalog',
+            parentNavigatorKey: _shellNavigatorKey,
+            builder: (context, state) => const CatalogPage(),
+            routes: [
+              GoRoute(
+                  path: ':id',
+                  parentNavigatorKey: _rootNavigatorKey,
+                  builder: (context, state) => const ProductDetailsPage())
+            ]),
         GoRoute(
           path: '/dashboard',
           name: 'dashboard',

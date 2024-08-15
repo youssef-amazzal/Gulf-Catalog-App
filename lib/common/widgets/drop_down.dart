@@ -111,11 +111,11 @@ class _DropDownState<T> extends State<DropDown<T>> {
             ? null
             : DropdownSearchData(
                 searchController: textEditingController,
-                searchInnerWidgetHeight: 50,
+                searchInnerWidgetHeight: 60,
                 searchInnerWidget: Container(
-                  height: 50,
+                  height: 60,
                   padding: const EdgeInsets.symmetric(
-                    vertical: 8,
+                    vertical: 5,
                     horizontal: 8,
                   ),
                   child: TextFormField(

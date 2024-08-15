@@ -44,9 +44,8 @@ class CategoryFilter extends StatelessWidget {
                 ),
         ),
         onSearch: (item, query) {
-          return item.value!.category
-              .toLowerCase()
-              .contains(query.toLowerCase());
+          return item.value!.type == DropDownItemType.header ||
+              item.value!.category.toLowerCase().contains(query.toLowerCase());
         },
       ),
     );

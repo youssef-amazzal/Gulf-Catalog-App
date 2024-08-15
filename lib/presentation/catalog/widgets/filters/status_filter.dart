@@ -3,20 +3,22 @@ import 'package:group_button/group_button.dart';
 import 'package:gulf_catalog_app/common/widgets/labeled_widget.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 
+import '../../../../common/models/my_group_button_options.dart';
+
 class StatusFilter extends StatelessWidget {
   const StatusFilter({
     super.key,
     required this.options,
   });
 
-  final List<StatusOptions> options;
+  final List<MyGroupButtonOptions> options;
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
     return LabeledWidget(
       label: "PRODUCT STATUS",
-      child: GroupButton<StatusOptions>(
+      child: GroupButton<MyGroupButtonOptions>(
         buttons: options,
         buttonBuilder: (isSelected, data, context) => Container(
           width: data.width,
@@ -43,14 +45,4 @@ class StatusFilter extends StatelessWidget {
       ),
     );
   }
-}
-
-class StatusOptions {
-  final String label;
-  final double? width;
-
-  const StatusOptions({
-    required this.label,
-    this.width,
-  });
 }

@@ -10,5 +10,6 @@ class AppVectors {
   static const String bell = '${basePath}bell$format';
   static const String package = '${basePath}package$format';
   static const String delivery = '${basePath}delivery$format';
-  static const String menuDots = '${basePath}menu-dots$format';
+  static const String menuDots = '${basePath}menu_dots$format';
+  static const String backArrow = '${basePath}back_arrow$format';
 }

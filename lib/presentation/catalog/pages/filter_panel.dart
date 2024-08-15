@@ -9,6 +9,8 @@ import 'package:gulf_catalog_app/presentation/catalog/widgets/filters/sort_optio
 import 'package:gulf_catalog_app/presentation/catalog/widgets/filters/status_filter.dart';
 import 'package:gulf_catalog_app/presentation/catalog/widgets/filters/vehicle_sector_filter.dart';
 
+import '../../../common/models/my_group_button_options.dart';
+
 class FilterPanel extends StatelessWidget {
   const FilterPanel({
     super.key,
@@ -75,12 +77,12 @@ class FilterPanel extends StatelessWidget {
                           children: [
                             StatusFilter(
                               options: [
-                                StatusOptions(
+                                MyGroupButtonOptions(
                                     label: "All", width: double.infinity),
-                                StatusOptions(
+                                MyGroupButtonOptions(
                                     label: "Available",
                                     width: statusButtonWidth),
-                                StatusOptions(
+                                MyGroupButtonOptions(
                                     label: "Out of Stock",
                                     width: statusButtonWidth),
                               ],
