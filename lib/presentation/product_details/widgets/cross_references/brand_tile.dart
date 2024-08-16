@@ -20,49 +20,71 @@ class BrandTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    return ExpansionTile(
-        tilePadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-        collapsedBackgroundColor: index % 2 == 0
-            ? theme.appColors.surface2
-            : theme.appColors.surface3,
-        backgroundColor: index % 2 == 0
-            ? theme.appColors.surface2
-            : theme.appColors.surface3,
-        iconColor: theme.appColors.accent,
-        collapsedIconColor: theme.appColors.accent,
-        shape: Border.all(color: Colors.transparent, width: 0),
-        title: Row(
-          children: [
-            Container(
-              height: 40,
-              width: 80,
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // border:
-                //     Border.all(color: Colors.blueGrey[800]!, width: 0.5),
-                borderRadius: BorderRadius.circular(4),
+    return Container(
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(color: theme.appColors.border, width: 1.5))),
+      child: ExpansionTile(
+          tilePadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+          collapsedBackgroundColor: index % 2 == 0
+              ? theme.appColors.surface2
+              : theme.appColors.surface1,
+          backgroundColor: index % 2 == 0
+              ? theme.appColors.surface2
+              : theme.appColors.surface1,
+          iconColor: theme.appColors.accent,
+          collapsedIconColor: theme.appColors.accent,
+          shape: Border.all(color: Colors.transparent, width: 0),
+          title: Row(
+            children: [
+              Container(
+                height: 40,
+                width: 80,
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  // border:
+                  //     Border.all(color: Colors.blueGrey[800]!, width: 0.5),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Image.network(imageUrl!, fit: BoxFit.contain),
               ),
-              child: Image.network(imageUrl!, fit: BoxFit.contain),
-            ),
-            const Gap(20),
-            Text(
-              brand,
-              style: theme.appTextStyles.body1,
-            ),
-          ],
-        ),
-        children: [
-          ListTile(
-            title: GridView.count(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                crossAxisCount: 3,
-                childAspectRatio: 3,
-                children: _buildReferenceTexts()),
-            tileColor: theme.appColors.onAccent,
+              const Gap(20),
+              Text(
+                brand,
+                style: theme.appTextStyles.body1,
+              ),
+              const Spacer(),
+              Container(
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                  color: theme.appColors.surface3,
+                  // border: Border.all(color: theme.appColors.accent, width: 1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: Text('${references.length}',
+                      style: theme.appTextStyles.body1.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: theme.appColors.onSurfacePrimary,
+                          fontSize: 13)),
+                ),
+              )
+            ],
           ),
-        ]);
+          children: [
+            ListTile(
+              title: GridView.count(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  crossAxisCount: 3,
+                  childAspectRatio: 3,
+                  children: _buildReferenceTexts()),
+              tileColor: theme.appColors.onAccent,
+            ),
+          ]),
+    );
   }
 
   List<Widget> _buildReferenceTexts() {
