@@ -3,12 +3,12 @@ import 'package:gap/gap.dart';
 import 'package:group_button/group_button.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 
-import 'package:gulf_catalog_app/presentation/product_details/widgets/carousel.dart';
-import 'package:gulf_catalog_app/presentation/product_details/widgets/compatible_vehicles/compatible_vehicles_panel.dart';
-import 'package:gulf_catalog_app/presentation/product_details/widgets/cross_references/cross_refs_panel.dart';
-import 'package:gulf_catalog_app/presentation/product_details/widgets/general_information/general_information_panel.dart';
-import 'package:gulf_catalog_app/presentation/product_details/widgets/title_bar.dart';
-import 'package:gulf_catalog_app/presentation/product_details/widgets/tool_bar.dart';
+import 'package:gulf_catalog_app/features/product_details/presentation/widgets/carousel.dart';
+import 'package:gulf_catalog_app/features/product_details/presentation/widgets/compatible_vehicles/compatible_vehicles_panel.dart';
+import 'package:gulf_catalog_app/features/product_details/presentation/widgets/cross_references/cross_refs_panel.dart';
+import 'package:gulf_catalog_app/features/product_details/presentation/widgets/general_information/general_information_panel.dart';
+import 'package:gulf_catalog_app/features/product_details/presentation/widgets/title_bar.dart';
+import 'package:gulf_catalog_app/features/product_details/presentation/widgets/tool_bar.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   const ProductDetailsPage({super.key});

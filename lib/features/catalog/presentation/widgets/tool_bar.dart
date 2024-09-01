@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:gulf_catalog_app/common/widgets/action_button/action_button.dart';
 import 'package:gulf_catalog_app/core/configs/assets/app_vectors.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
-import 'package:gulf_catalog_app/presentation/catalog/widgets/my_search_bar.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/widgets/my_search_bar.dart';
 
 class ToolBar extends StatelessWidget {
   const ToolBar({

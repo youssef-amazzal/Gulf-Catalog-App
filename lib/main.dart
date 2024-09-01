@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gulf_catalog_app/common/bloc/theme_cubit.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
-import 'package:gulf_catalog_app/routes/app_routes.dart';
+import 'package:gulf_catalog_app/core/configs/routes/app_routes.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';

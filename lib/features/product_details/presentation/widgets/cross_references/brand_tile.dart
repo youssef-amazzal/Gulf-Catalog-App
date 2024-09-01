@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
-import 'package:gulf_catalog_app/presentation/product_details/widgets/cross_references/reference_text.dart';
+import 'package:gulf_catalog_app/features/product_details/presentation/widgets/cross_references/reference_text.dart';
 
 class BrandTile extends StatelessWidget {
   final int index;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gulf_catalog_app/presentation/product_details/widgets/panel.dart';
+import 'package:gulf_catalog_app/features/product_details/presentation/widgets/panel.dart';
 import 'package:gulf_catalog_app/models/cross_ref_brand.dart';
-import 'package:gulf_catalog_app/presentation/product_details/panel_search_bar.dart';
+import 'package:gulf_catalog_app/features/product_details/presentation/panel_search_bar.dart';
 import 'brand_tile.dart';
 
 class CrossRefsPanel extends StatefulWidget {

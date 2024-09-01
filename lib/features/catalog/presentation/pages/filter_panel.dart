@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
-import 'package:gulf_catalog_app/presentation/catalog/widgets/filters/category_filter.dart';
-import 'package:gulf_catalog_app/presentation/catalog/widgets/filters/vechicle_serie_filter.dart';
-import 'package:gulf_catalog_app/presentation/catalog/widgets/filters/vehicle_manufacturer_filter.dart';
-import 'package:gulf_catalog_app/presentation/catalog/widgets/filters/vehicle_model_filter.dart';
-import 'package:gulf_catalog_app/presentation/catalog/widgets/filters/sort_option_filter.dart';
-import 'package:gulf_catalog_app/presentation/catalog/widgets/filters/status_filter.dart';
-import 'package:gulf_catalog_app/presentation/catalog/widgets/filters/vehicle_sector_filter.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/widgets/filters/category_filter.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/widgets/filters/vechicle_serie_filter.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/widgets/filters/vehicle_manufacturer_filter.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/widgets/filters/vehicle_model_filter.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/widgets/filters/sort_option_filter.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/widgets/filters/status_filter.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/widgets/filters/vehicle_sector_filter.dart';
 
-import '../../../common/models/my_group_button_options.dart';
+import '../../../../common/models/my_group_button_options.dart';
 
 class FilterPanel extends StatelessWidget {
   const FilterPanel({

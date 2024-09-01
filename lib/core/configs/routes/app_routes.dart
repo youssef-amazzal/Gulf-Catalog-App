@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gulf_catalog_app/common/layout/main_layout.dart';
-import 'package:gulf_catalog_app/presentation/catalog/catalog.dart';
-import 'package:gulf_catalog_app/presentation/dashboard/dashboard.dart';
-import 'package:gulf_catalog_app/presentation/product_details/product_details.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/catalog.dart';
+import 'package:gulf_catalog_app/features/dashboard/presentation/dashboard.dart';
+import 'package:gulf_catalog_app/features/product_details/presentation/product_details.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();

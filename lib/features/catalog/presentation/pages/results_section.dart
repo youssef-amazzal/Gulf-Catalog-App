@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:gulf_catalog_app/presentation/catalog/widgets/tool_bar.dart';
-import 'package:gulf_catalog_app/presentation/catalog/widgets/product_card.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/widgets/tool_bar.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/widgets/product_card.dart';
 
 class ResultsSection extends StatelessWidget {
   const ResultsSection({super.key});
