@@ -8,6 +8,6 @@ class GeneralInformationPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Panel(child: Container(), title: 'General Information');
+    return Panel(title: 'General Information', child: Container());
   }
 }

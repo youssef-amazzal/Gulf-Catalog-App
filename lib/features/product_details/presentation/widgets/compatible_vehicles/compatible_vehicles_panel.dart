@@ -9,6 +9,6 @@ class CompatibleVehiclesPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final theme = context.theme;
-    return Panel(child: Container(), title: 'Compatible Vehicles');
+    return Panel(title: 'Compatible Vehicles', child: Container());
   }
 }
