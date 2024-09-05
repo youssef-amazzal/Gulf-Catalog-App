@@ -40,11 +40,10 @@ dependencies:
   hydrated_bloc: ^9.1.5
   path_provider: ^2.1.4
 
+  path: ">=1.8.3 <=1.9.0"
+
   # routing
   go_router: ^14.2.3
-
-  # http client
-  dio: ^5.6.0
 
   # additional widgets
   cached_network_image: ^3.4.0
@@ -64,9 +63,6 @@ dependencies:
   # database
   floor: ^1.5.0
   
-  # make request to api
-  retrofit: ^4.2.0
-
   # Hooks
   flutter_hooks: ^0.20.5
 
@@ -74,6 +70,10 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  flutter_dotenv: ^5.1.0
+  supabase_flutter: ^2.6.0
+  fpdart: ^1.1.0
+  infinite_scroll_pagination: ^4.0.0
 
 
 dev_dependencies:
@@ -89,6 +89,7 @@ dev_dependencies:
   retrofit_generator: ^8.2.1
   floor_generator: ^1.5.0
   build_runner: ^2.4.11
+  json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -108,6 +109,7 @@ flutter:
     - assets/images/products/CF-112/
     - assets/svg/
     - assets/fonts/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
