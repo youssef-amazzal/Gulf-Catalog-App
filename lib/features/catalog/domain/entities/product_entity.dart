@@ -1,28 +1,48 @@
 import 'package:equatable/equatable.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/brand.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/category.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/cross_ref.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/image.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/oe_ref.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/price_entity.dart';
-import 'package:gulf_catalog_app/features/catalog/domain/entities/category_entity.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/vehicle.dart';
 
 class Product extends Equatable {
   final num id;
-  final String reference;
-  final String brand;
-  final CategoryEntity category;
   final num quantity;
-  final String? thumbnail;
+  final String reference;
+  final Map<String, dynamic> details;
+
+  final Brand brand;
+  final Category category;
+
   final Price? unitPrice;
   final List<Price> packPrices;
-  final DateTime updatedAt;
+
+  final Image? thumbnail;
+  final List<Image> images;
+
+  final List<OeRef> oeRefs;
+  final List<Vehicle> vehicles;
+  final List<CrossRef> crossRefs;
+
+  final DateTime? updatedAt;
 
   const Product({
     required this.id,
     required this.reference,
     required this.brand,
     required this.category,
+    required this.quantity,
+    required this.details,
+    required this.thumbnail,
+    required this.images,
     required this.unitPrice,
     required this.packPrices,
-    required this.thumbnail,
-    required this.quantity,
     required this.updatedAt,
+    required this.oeRefs,
+    required this.vehicles,
+    required this.crossRefs,
   });
 
   @override
@@ -34,6 +54,13 @@ class Product extends Equatable {
       thumbnail,
       unitPrice,
       packPrices,
+      brand,
+      category,
+      details,
+      images,
+      oeRefs,
+      vehicles,
+      crossRefs,
       updatedAt
     ];
   }

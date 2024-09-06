@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class Price extends Equatable {
-  final num id;
   final num price;
   final num quantity;
   final num? discount;
@@ -9,16 +8,14 @@ class Price extends Equatable {
   final DateTime? updatedAt;
 
   const Price({
-    required this.id,
     required this.price,
-    required this.discount,
     required this.quantity,
+    required this.discount,
     required this.expirationDate,
     required this.updatedAt,
   });
 
   @override
-  List<Object?> get props {
-    return [price, discount, quantity, expirationDate, updatedAt];
-  }
+  List<Object?> get props =>
+      [price, quantity, discount, expirationDate, updatedAt];
 }

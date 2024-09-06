@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gulf_catalog_app/common/widgets/svg_icon.dart';
@@ -168,7 +167,7 @@ class _CardImage extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: Colors.white),
         child: CachedNetworkImage(
-          imageUrl: product.thumbnail ?? '',
+          imageUrl: product.thumbnail?.url ?? '',
           fadeInDuration: const Duration(milliseconds: 0),
           fadeOutDuration: const Duration(milliseconds: 0),
           placeholderFadeInDuration: const Duration(milliseconds: 0),

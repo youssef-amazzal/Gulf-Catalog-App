@@ -10,6 +10,8 @@ abstract class ProductsRemoteDataSource {
     int? limit,
     int? offset,
   });
+
+  Future<List<ProductModel>> getProductById({required num id});
 }
 
 class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
@@ -34,7 +36,7 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
           category:category_id(id, name),
           brand:brand_id(id, name),
           quantity,
-          thumbnail:thumbnail(url),
+          thumbnail:thumbnail(id, url),
           prices(
             id,
             price,
@@ -45,6 +47,10 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
           updated_at
         ''');
 
+      print(data[0]);
+      print(data[1]);
+      print(data[2]);
+
       return data
           .map((e) => ProductModel.fromJson(e))
           .toList()
@@ -53,5 +59,11 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
     } catch (e) {
       throw ServerException(message: e.toString());
     }
+  }
+
+  @override
+  Future<List<ProductModel>> getProductById({required num id}) {
+    // TODO: implement getProductById
+    throw UnimplementedError();
   }
 }
