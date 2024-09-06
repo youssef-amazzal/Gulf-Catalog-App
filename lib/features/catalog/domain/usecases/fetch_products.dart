@@ -9,7 +9,7 @@ class FetchProducts implements Usecase<List<Product>, void> {
   FetchProducts({required this.productRepository});
 
   @override
-  Future<Either<Failure, List<Product>>> call(void params) async {
+  Future<Either<Failure, List<Product>>> call([_]) async {
     return await productRepository.getProducts();
   }
 }

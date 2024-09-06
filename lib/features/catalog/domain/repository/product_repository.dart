@@ -4,4 +4,5 @@ import 'package:gulf_catalog_app/features/catalog/domain/entities/product_entity
 
 abstract class ProductRepository {
   Future<Either<Failure, List<Product>>> getProducts();
+  Future<Either<Failure, Product>> getProductDetails();
 }

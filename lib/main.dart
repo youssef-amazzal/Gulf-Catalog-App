@@ -1,19 +1,33 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:gulf_catalog_app/common/cubits/app_user/app_user_cubit.dart';
-import 'package:gulf_catalog_app/common/cubits/theme/theme_cubit.dart';
-import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
-import 'package:gulf_catalog_app/core/configs/routes/app_routes.dart';
-import 'package:gulf_catalog_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:gulf_catalog_app/init_dependencies.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'package:gulf_catalog_app/common/cubits/app_user/app_user_cubit.dart';
+import 'package:gulf_catalog_app/common/cubits/theme/theme_cubit.dart';
+import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
+import 'package:gulf_catalog_app/core/configs/routes/app_routes.dart';
+import 'package:gulf_catalog_app/features/auth/auth.dart';
+import 'package:gulf_catalog_app/features/catalog/catalog.dart';
+import 'package:gulf_catalog_app/init_dependencies.dart';
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
 
   // Initialize HydratedBloc
   HydratedBloc.storage = await HydratedStorage.build(
@@ -52,6 +66,7 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(create: (_) => ThemeCubit()),
           BlocProvider(create: (_) => serviceLocator<AppUserCubit>()),
           BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
+          BlocProvider(create: (_) => serviceLocator<ProductBloc>()),
         ],
         child: BlocBuilder<ThemeCubit, ThemeMode>(builder: (context, mode) {
           return MaterialApp.router(

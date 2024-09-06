@@ -1,19 +1,16 @@
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:gulf_catalog_app/features/catalog/catalog.dart';
+import 'package:gulf_catalog_app/features/auth/auth.dart';
 import 'package:gulf_catalog_app/common/cubits/app_user/app_user_cubit.dart';
-import 'package:gulf_catalog_app/features/auth/data/data_sources/auth_remote_data_source.dart';
-import 'package:gulf_catalog_app/features/auth/data/repository/auth_repository_impl.dart';
-import 'package:gulf_catalog_app/features/auth/domain/repository/auth_repository.dart';
-import 'package:gulf_catalog_app/features/auth/domain/usecases/current_user.dart';
-import 'package:gulf_catalog_app/features/auth/domain/usecases/user_sign_in.dart';
-import 'package:gulf_catalog_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
   _initCore();
   _initAuth();
+  _initCatalog();
   final supabase = await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
     anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
@@ -59,4 +56,20 @@ void _initAuth() {
           currentUser: serviceLocator(),
           appUserCubit: serviceLocator(),
         ));
+}
+
+void _initCatalog() {
+  serviceLocator
+    ..registerFactory<ProductsRemoteDataSource>(
+      () => ProductsRemoteDataSourceImpl(client: serviceLocator()),
+    )
+    ..registerFactory<ProductRepository>(
+      () => ProductRepositoryImpl(source: serviceLocator()),
+    )
+    ..registerFactory(
+      () => FetchProducts(productRepository: serviceLocator()),
+    )
+    ..registerLazySingleton(
+      () => ProductBloc(fetchProducts: serviceLocator()),
+    );
 }

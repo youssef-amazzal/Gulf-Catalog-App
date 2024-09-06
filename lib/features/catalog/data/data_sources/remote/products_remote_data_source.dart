@@ -1,8 +1,9 @@
+import 'package:gulf_catalog_app/core/error/exceptions.dart';
 import 'package:gulf_catalog_app/features/catalog/data/models/product_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-abstract class _ProductsRemoteDataSource {
-  Future<List<ProductModel>?> getProducts({
+abstract class ProductsRemoteDataSource {
+  Future<List<ProductModel>> getProducts({
     String? reference,
     int? category,
     String? sortOption,
@@ -11,15 +12,15 @@ abstract class _ProductsRemoteDataSource {
   });
 }
 
-class ProductsRemoteDataSource extends _ProductsRemoteDataSource {
-  final SupabaseClient supabaseClient;
+class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
+  final SupabaseClient client;
 
-  ProductsRemoteDataSource({
-    required this.supabaseClient,
+  ProductsRemoteDataSourceImpl({
+    required this.client,
   });
 
   @override
-  Future<List<ProductModel>?> getProducts({
+  Future<List<ProductModel>> getProducts({
     String? reference,
     int? category,
     String? sortOption,
@@ -27,8 +28,7 @@ class ProductsRemoteDataSource extends _ProductsRemoteDataSource {
     int? offset = 0,
   }) async {
     try {
-      List<Map<String, dynamic>> data =
-          await supabaseClient.from('products').select('''
+      List<Map<String, dynamic>> data = await client.from('products').select('''
           id,
           ref,
           category:category_id(id, name),
@@ -41,11 +41,17 @@ class ProductsRemoteDataSource extends _ProductsRemoteDataSource {
             quantity,
             discount,
             expiration_date
-          )
+          ),
+          updated_at
         ''');
-      return data.map((e) => ProductModel.fromJson(e)).toList();
-    } catch (error) {
-      throw Error();
+
+      return data
+          .map((e) => ProductModel.fromJson(e))
+          .toList()
+          .reversed
+          .toList();
+    } catch (e) {
+      throw ServerException(message: e.toString());
     }
   }
 }
