@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'package:gulf_catalog_app/features/catalog/presentation/bloc/details/details_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -66,7 +68,8 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(create: (_) => ThemeCubit()),
           BlocProvider(create: (_) => serviceLocator<AppUserCubit>()),
           BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
-          BlocProvider(create: (_) => serviceLocator<ProductBloc>()),
+          BlocProvider(create: (_) => serviceLocator<CatalogBloc>()),
+          BlocProvider(create: (_) => serviceLocator<DetailsBloc>()),
         ],
         child: BlocBuilder<ThemeCubit, ThemeMode>(builder: (context, mode) {
           return MaterialApp.router(
@@ -84,7 +87,7 @@ class _MyAppState extends State<MyApp> {
             supportedLocales: const [
               Locale('en'), // English
               Locale('fr'), // French
-              Locale('ar'), // Arabic
+              // Locale('ar'), // Arabic
             ],
           );
         }));

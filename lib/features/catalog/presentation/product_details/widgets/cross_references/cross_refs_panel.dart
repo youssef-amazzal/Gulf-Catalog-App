@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import "package:collection/collection.dart";
+import 'package:gulf_catalog_app/features/catalog/domain/entities/cross_ref.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/oe_ref.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/panel.dart';
-import 'package:gulf_catalog_app/models/cross_ref_brand.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/panel_search_bar.dart';
 import 'brand_tile.dart';
 
 class CrossRefsPanel extends StatefulWidget {
+  final List<CrossRef> crossRefs;
+  final List<OeRef> oeRefs;
   const CrossRefsPanel({
     super.key,
+    required this.crossRefs,
+    required this.oeRefs,
   });
 
   @override
@@ -14,38 +20,34 @@ class CrossRefsPanel extends StatefulWidget {
 }
 
 class _CrossRefsPanelState extends State<CrossRefsPanel> {
-  List<CrossRefBrand> filterdData = [];
-  List<CrossRefBrand> data = [
-    CrossRefBrand(
-        key: 0,
-        brand: 'ASHIKA',
-        imageUrl: 'https://cdn.autodoc.de/brands/thumbs/10029.png',
-        references: ['90-01-112']),
-    CrossRefBrand(
-        key: 1,
-        brand: 'LuK',
-        imageUrl: 'https://cdn.autodoc.de/brands/thumbs/6.png',
-        references: ['510 0111 10', '510 0164 10']),
-    CrossRefBrand(
-        key: 2,
-        brand: 'LPR',
-        imageUrl: 'https://cdn.autodoc.de/brands/thumbs/480.png',
-        references: [
-          '30620-00Q0H',
-          '3062000Q1G',
-          '306A0-JA60A',
-          '306A0-JA60B',
-          '306A0-JA60C',
-          '32150-00QAA',
-          '32150-00QAB',
-          '32150-00QAC',
-          '32150-00QAD'
-        ]),
-  ];
+  List<GroupedRefs> filterdData = [];
+  late final List<GroupedRefs> data;
 
   @override
   void initState() {
     super.initState();
+
+    final oeGroupes =
+        widget.oeRefs.groupListsBy((e) => e.mfr).entries.map((entry) {
+      return GroupedRefs(
+        key: entry.key.id.toInt(),
+        brand: entry.key.name,
+        imageUrl: entry.key.logo,
+        references: entry.value.map((e) => e.ref).toList(),
+      );
+    }).sortedBy((key) => key.brand);
+
+    final crossGroupes =
+        widget.crossRefs.groupListsBy((e) => e.brand).entries.map((entry) {
+      return GroupedRefs(
+        key: entry.key.id.toInt(),
+        brand: entry.key.name,
+        imageUrl: entry.key.logo,
+        references: entry.value.map((e) => e.ref).toList(),
+      );
+    }).sortedBy((key) => key.brand);
+
+    data = [...oeGroupes, ...crossGroupes].toList();
     filterdData = List.from(data);
   }
 
@@ -106,5 +108,29 @@ class _CrossRefsPanelState extends State<CrossRefsPanel> {
           .where((element) => element.references.isNotEmpty)
           .toList();
     });
+  }
+}
+
+class GroupedRefs {
+  final int key;
+  final String brand;
+  final String? imageUrl;
+  List<String> references;
+
+  GroupedRefs({
+    required this.key,
+    required this.brand,
+    required this.imageUrl,
+    required this.references,
+  });
+
+  GroupedRefs copyWith(
+      {int? key, String? imageUrl, String? brand, List<String>? references}) {
+    return GroupedRefs(
+      key: key ?? this.key,
+      brand: brand ?? this.brand,
+      imageUrl: imageUrl ?? this.imageUrl,
+      references: references ?? List.from(this.references),
+    );
   }
 }

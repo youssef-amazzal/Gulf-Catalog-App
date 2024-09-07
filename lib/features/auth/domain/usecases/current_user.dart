@@ -5,11 +5,11 @@ import 'package:gulf_catalog_app/common/entities/user_entity.dart';
 import 'package:gulf_catalog_app/features/auth/domain/repository/auth_repository.dart';
 
 class CurrentUser implements Usecase<User, void> {
-  final AuthRepository authRepository;
-  CurrentUser({required this.authRepository});
+  final AuthRepository repository;
+  CurrentUser({required this.repository});
 
   @override
   Future<Either<Failure, User>> call([_]) async {
-    return await authRepository.currentUser();
+    return await repository.currentUser();
   }
 }

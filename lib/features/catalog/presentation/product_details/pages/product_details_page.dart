@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:group_button/group_button.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/bloc/details/details_bloc.dart';
 
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/carousel.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/compatible_vehicles/compatible_vehicles_panel.dart';
@@ -11,56 +13,90 @@ import 'package:gulf_catalog_app/features/catalog/presentation/product_details/w
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/tool_bar.dart';
 
 class ProductDetailsPage extends StatelessWidget {
-  const ProductDetailsPage({super.key});
+  final int productId;
+  const ProductDetailsPage({super.key, required this.productId});
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    context.read<DetailsBloc>().add(DetailsFetchEvent(productId: productId));
+
     return Scaffold(
       body: Container(
         color: theme.appColors.background,
-        child: const SingleChildScrollView(
+        child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Padding(
-            padding: EdgeInsets.all(40),
+            padding: const EdgeInsets.all(40),
             child: Column(
               children: [
-                ToolBar(),
-                Gap(25),
-                TitleBar(),
-                Gap(25),
-                IntrinsicHeight(
-                  child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                const ToolBar(),
+                const Gap(25),
+                BlocConsumer<DetailsBloc, DetailsState>(
+                  listener: (context, state) {
+                    if (state is DetailsFailedFetching) {
+                      print('Failed to fetch product: ${state.message}');
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is! DetailsSuccessfulFetching) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    final product = state.product;
+
+                    return Column(
                       children: [
-                        SizedBox(
-                            width: 450,
-                            child: Column(
+                        TitleBar(
+                          title: product.reference,
+                          category: product.category.name,
+                        ),
+                        const Gap(25),
+                        IntrinsicHeight(
+                          child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Carousel(),
-                                // Gap(40),
-                              ],
-                            )),
-                        Gap(25),
-                        Expanded(child: GeneralInformationPanel()),
-                      ]),
+                                SizedBox(
+                                    width: 450,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Carousel(
+                                          images: product.images,
+                                        ),
+                                        // Gap(40),
+                                      ],
+                                    )),
+                                const Gap(25),
+                                const Expanded(
+                                    child: GeneralInformationPanel()),
+                              ]),
+                        ),
+                        const Gap(25),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 600,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                  width: 450,
+                                  child: CrossRefsPanel(
+                                    crossRefs: product.crossRefs,
+                                    oeRefs: product.oeRefs,
+                                  )),
+                              const Gap(25),
+                              const Expanded(
+                                child: CompatibleVehiclesPanel(),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    );
+                  },
                 ),
-                Gap(25),
-                SizedBox(
-                  width: double.infinity,
-                  height: 600,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(width: 450, child: CrossRefsPanel()),
-                      Gap(25),
-                      Expanded(
-                        child: CompatibleVehiclesPanel(),
-                      )
-                    ],
-                  ),
-                )
               ],
             ),
           ),

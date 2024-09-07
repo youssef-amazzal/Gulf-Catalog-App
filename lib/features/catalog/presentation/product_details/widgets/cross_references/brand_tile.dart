@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
@@ -47,7 +48,17 @@ class BrandTile extends StatelessWidget {
                   //     Border.all(color: Colors.blueGrey[800]!, width: 0.5),
                   borderRadius: BorderRadius.circular(4),
                 ),
-                child: Image.network(imageUrl!, fit: BoxFit.contain),
+                child: CachedNetworkImage(
+                    imageUrl: imageUrl ?? "",
+                    fit: BoxFit.contain,
+                    memCacheWidth: 80,
+                    httpHeaders: const {
+                      "referer": "https://web.tecalliance.net/"
+                    },
+                    placeholder: (context, url) =>
+                        Image.asset('assets/images/placeholder.png'),
+                    errorWidget: (context, url, error) =>
+                        Image.asset('assets/images/placeholder.png')),
               ),
               const Gap(20),
               Text(

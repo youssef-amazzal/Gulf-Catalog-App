@@ -1,3 +1,5 @@
+import 'package:gulf_catalog_app/features/catalog/domain/usecases/fetch_product_details.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/bloc/details/details_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
@@ -44,11 +46,11 @@ void _initAuth() {
     )
     ..registerFactory(
       () => UserSignInAnon(
-          authRepository: serviceLocator()), // Register Feature's UseCase 1
+          repository: serviceLocator()), // Register Feature's UseCase 1
     )
     ..registerFactory(
       () => CurrentUser(
-          authRepository: serviceLocator()), // Register Feature's UseCase 2
+          repository: serviceLocator()), // Register Feature's UseCase 2
     )
     ..registerLazySingleton(() => AuthBloc(
           // Register Feature's Bloc
@@ -67,9 +69,19 @@ void _initCatalog() {
       () => ProductRepositoryImpl(source: serviceLocator()),
     )
     ..registerFactory(
-      () => FetchProducts(productRepository: serviceLocator()),
+      () => FetchProducts(repository: serviceLocator()),
+    )
+    ..registerFactory(
+      () => FetchProductDetails(repository: serviceLocator()),
     )
     ..registerLazySingleton(
-      () => ProductBloc(fetchProducts: serviceLocator()),
+      () => CatalogBloc(
+        fetchProducts: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => DetailsBloc(
+        fetchProductDetails: serviceLocator(),
+      ),
     );
 }

@@ -1,4 +1,4 @@
-import 'package:gulf_catalog_app/features/catalog/domain/entities/price_entity.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/price.dart';
 
 class PriceModel extends Price {
   const PriceModel({

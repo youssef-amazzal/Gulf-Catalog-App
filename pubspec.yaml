@@ -66,15 +66,16 @@ dependencies:
   # Hooks
   flutter_hooks: ^0.20.5
 
-  # localization
-  flutter_localizations:
-    sdk: flutter
-  intl: any
+
   flutter_dotenv: ^5.1.0
   supabase_flutter: ^2.6.0
   fpdart: ^1.1.0
   infinite_scroll_pagination: ^4.0.0
 
+
+  i18n_extension: ^12.0.1
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

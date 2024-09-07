@@ -21,10 +21,10 @@ class VehicleModel extends Vehicle {
         capacityCc: json['capacity_cc'],
         engine: json['engine'],
         bodyStyle: json['body_style'],
-        beginYearMonth: json['begin_year_month']
+        beginYearMonth: json['begin_year_month'] != null
             ? DateTime.parse(json['begin_year_month'])
             : null,
-        endYearMonth: json['end_year_month']
+        endYearMonth: json['end_year_month'] != null
             ? DateTime.parse(json['end_year_month'])
             : null,
         updatedAt: json['updated_at'] != null

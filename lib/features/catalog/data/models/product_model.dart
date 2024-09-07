@@ -6,7 +6,7 @@ import 'package:gulf_catalog_app/features/catalog/data/models/image_model.dart';
 import 'package:gulf_catalog_app/features/catalog/data/models/oe_ref_model.dart';
 import 'package:gulf_catalog_app/features/catalog/data/models/price_model.dart';
 import 'package:gulf_catalog_app/features/catalog/data/models/vehicle_model.dart';
-import 'package:gulf_catalog_app/features/catalog/domain/entities/product_entity.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/product.dart';
 
 class ProductModel extends Product {
   const ProductModel({
@@ -37,15 +37,17 @@ class ProductModel extends Product {
       brand: BrandModel.fromJson(json['brand']),
       category: CategoryModel.fromJson(json['category']),
       quantity: json['quantity'],
-      details: json['details'] ?? {},
+      details: json['details'] != null ? _parseDetails(json['details']) : null,
       thumbnail: _parseThumbnail(json['thumbnail']),
       images: _parseImages(json['images']),
       unitPrice: unitPrice,
       packPrices: packPrices,
       oeRefs: _parseOeRefs(json['oe_refs']),
-      vehicles: _parseVehicles(json['vehicles']),
+      vehicles: [],
       crossRefs: _parseCrossRefs(json['cross_refs']),
-      updatedAt: DateTime.parse(json['updated_at']),
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
+          : null,
     );
   }
 
@@ -67,9 +69,9 @@ class ProductModel extends Product {
     return thumbnailJson != null ? ImageModel.fromJson(thumbnailJson) : null;
   }
 
-  static List<ImageModel> _parseImages(dynamic imagesJson) {
+  static List<ImageModel> _parseImages(List<dynamic>? imagesJson) {
     return imagesJson != null
-        ? (imagesJson as List).map((e) => ImageModel.fromJson(e)).toList()
+        ? imagesJson.map((e) => ImageModel.fromJson(e)).toList()
         : [];
   }
 
@@ -89,5 +91,9 @@ class ProductModel extends Product {
     return crossRefsJson != null
         ? (crossRefsJson as List).map((e) => CrossRefModel.fromJson(e)).toList()
         : [];
+  }
+
+  static List<Section> _parseDetails(dynamic json) {
+    return [];
   }
 }

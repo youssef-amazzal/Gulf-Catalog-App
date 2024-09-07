@@ -1,11 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:group_button/group_button.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
+import 'package:gulf_catalog_app/features/catalog/data/models/image_model.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/image.dart'
+    as gulf;
 
 class Carousel extends StatefulWidget {
+  final List<gulf.Image> images;
+
   const Carousel({
     super.key,
+    required this.images,
   });
 
   @override
@@ -14,16 +21,18 @@ class Carousel extends StatefulWidget {
 
 class _CarouselState extends State<Carousel> {
   late GroupButtonController controller;
-  late AssetImage selectedImage;
-  late List<AssetImage> images;
+  late gulf.Image selectedImage;
 
   @override
   void initState() {
     super.initState();
-    images = _getImage();
     controller = GroupButtonController();
     controller.selectIndex(0);
-    selectedImage = images[0];
+    if (widget.images.isEmpty) {
+      widget.images
+          .add(ImageModel(url: "", isDown: true, updatedAt: DateTime.now()));
+    }
+    selectedImage = widget.images[0];
   }
 
   @override
@@ -43,20 +52,34 @@ class _CarouselState extends State<Carousel> {
                   child: Container(
                 width: double.infinity,
                 clipBehavior: Clip.antiAlias,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(14)),
-                child: Image(image: selectedImage, fit: BoxFit.cover),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: CachedNetworkImage(
+                  imageUrl: selectedImage.url,
+                  memCacheWidth: 500,
+                  fadeInDuration: const Duration(milliseconds: 0),
+                  fadeOutDuration: const Duration(milliseconds: 0),
+                  placeholderFadeInDuration: const Duration(milliseconds: 0),
+                  httpHeaders: const {"Connection": "Keep-Alive"},
+                  placeholder: (context, url) =>
+                      Image.asset('assets/images/placeholder.png'),
+                  errorWidget: (context, url, error) =>
+                      Image.asset('assets/images/placeholder.png'),
+                  fit: BoxFit.contain,
+                ),
               )),
               const Gap(10),
               SizedBox(
                 height: 66.5,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: GroupButton<AssetImage>(
+                  child: GroupButton<gulf.Image>(
                     controller: controller,
-                    buttons: images,
+                    buttons: widget.images,
                     onSelected: (value, index, isSelected) => setState(() {
-                      selectedImage = images[index];
+                      selectedImage = widget.images[index];
                     }),
                     buttonBuilder: (selected, value, context) {
                       return Container(
@@ -64,6 +87,7 @@ class _CarouselState extends State<Carousel> {
                         height: 66.5,
                         width: 66.5,
                         decoration: BoxDecoration(
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(14),
                           border: selected
                               ? Border.all(
@@ -75,8 +99,18 @@ class _CarouselState extends State<Carousel> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           clipBehavior: Clip.antiAlias,
-                          child: Image(
-                            image: value,
+                          child: CachedNetworkImage(
+                            imageUrl: value.url,
+                            memCacheWidth: 70,
+                            fadeInDuration: const Duration(milliseconds: 0),
+                            fadeOutDuration: const Duration(milliseconds: 0),
+                            placeholderFadeInDuration:
+                                const Duration(milliseconds: 0),
+                            httpHeaders: const {"Connection": "Keep-Alive"},
+                            placeholder: (context, url) =>
+                                Image.asset('assets/images/placeholder.png'),
+                            errorWidget: (context, url, error) =>
+                                Image.asset('assets/images/placeholder.png'),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -88,22 +122,5 @@ class _CarouselState extends State<Carousel> {
             ]),
       ),
     );
-  }
-
-  List<AssetImage> _getImage() {
-    return const [
-      AssetImage('assets/images/products/CF-112/CF-112_0.webp'),
-      AssetImage('assets/images/products/CF-112/CF-112_1.webp'),
-      AssetImage('assets/images/products/CF-112/CF-112_2.webp'),
-      AssetImage('assets/images/products/CF-112/CF-112_3.webp'),
-      AssetImage('assets/images/products/CF-112/CF-112_4.webp'),
-      AssetImage('assets/images/products/CF-112/CF-112_5.webp'),
-      AssetImage('assets/images/products/CF-112/CF-112_6.webp'),
-      AssetImage('assets/images/products/CF-112/CF-112_7.webp'),
-      AssetImage('assets/images/products/CF-112/CF-112_8.webp'),
-      AssetImage('assets/images/products/CF-112/CF-112_9.webp'),
-      AssetImage('assets/images/products/CF-112/CF-112_10.webp'),
-      AssetImage('assets/images/products/CF-112/CF-112_11.webp'),
-    ];
   }
 }

@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Image extends Equatable {
   final String url;
-  final bool isDown;
+  final bool? isDown;
   final DateTime? updatedAt;
 
   const Image({

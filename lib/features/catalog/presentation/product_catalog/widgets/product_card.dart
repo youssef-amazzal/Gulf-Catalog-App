@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:gulf_catalog_app/common/widgets/svg_icon.dart';
 import 'package:gulf_catalog_app/core/configs/assets/app_vectors.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
-import 'package:gulf_catalog_app/features/catalog/domain/entities/product_entity.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/product.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/i18n/categories.i18n.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -126,7 +127,7 @@ class _CardSubtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme;
     return Text(
-      product.category.name,
+      product.category.name.i18n,
       overflow: TextOverflow.ellipsis,
       style: theme.appTextStyles.bodyAlt1
           .copyWith(fontSize: 12.5, fontWeight: FontWeight.w600),
@@ -168,6 +169,7 @@ class _CardImage extends StatelessWidget {
             borderRadius: BorderRadius.circular(12), color: Colors.white),
         child: CachedNetworkImage(
           imageUrl: product.thumbnail?.url ?? '',
+          memCacheHeight: 300,
           fadeInDuration: const Duration(milliseconds: 0),
           fadeOutDuration: const Duration(milliseconds: 0),
           placeholderFadeInDuration: const Duration(milliseconds: 0),

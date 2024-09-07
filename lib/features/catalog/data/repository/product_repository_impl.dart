@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:gulf_catalog_app/core/error/failure.dart';
 import 'package:gulf_catalog_app/core/error/exceptions.dart';
-import 'package:gulf_catalog_app/features/catalog/domain/entities/product_entity.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/product.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/repository/product_repository.dart';
 import 'package:gulf_catalog_app/features/catalog/data/data_sources/remote/products_remote_data_source.dart';
 
@@ -23,8 +23,13 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<Either<Failure, Product>> getProductDetails() {
-    // TODO: implement getProductExtended
-    throw UnimplementedError();
+  Future<Either<Failure, Product>> getProductDetails({required int id}) async {
+    try {
+      final product = await _productsApiService.getProductById(id: id);
+
+      return right(product);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
   }
 }

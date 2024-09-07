@@ -11,7 +11,7 @@ abstract class ProductsRemoteDataSource {
     int? offset,
   });
 
-  Future<List<ProductModel>> getProductById({required num id});
+  Future<ProductModel> getProductById({required num id});
 }
 
 class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
@@ -43,13 +43,8 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
             quantity,
             discount,
             expiration_date
-          ),
-          updated_at
+          )
         ''');
-
-      print(data[0]);
-      print(data[1]);
-      print(data[2]);
 
       return data
           .map((e) => ProductModel.fromJson(e))
@@ -62,8 +57,43 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
   }
 
   @override
-  Future<List<ProductModel>> getProductById({required num id}) {
-    // TODO: implement getProductById
-    throw UnimplementedError();
+  Future<ProductModel> getProductById({required num id}) async {
+    try {
+      List<Map<String, dynamic>> data = await client.from('products').select('''
+          id,
+          ref,
+          category:category_id(id, name),
+          brand:brand_id(id, name, logo),
+          quantity,
+          details,
+          images!product_images(
+            id,
+            url
+          ),
+          prices(
+            price,
+            quantity,
+            discount,
+            expiration_date
+          ),
+          cross_refs(
+            id,
+            ref,
+            brand:brands(id, name, logo)
+          ),
+           oe_refs(
+            id,
+            ref,
+            mfr:manufacturers(id, name, logo)
+          ),
+          vehicles(name, kw, hp, engine, begin_year_month, end_year_month)
+        ''').eq('id', id);
+
+      // print(data[0]['cross_refs']);
+
+      return ProductModel.fromJson(data[0]);
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
   }
 }
