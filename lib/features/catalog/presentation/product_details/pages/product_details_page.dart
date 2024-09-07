@@ -13,16 +13,15 @@ import 'package:gulf_catalog_app/features/catalog/presentation/product_details/w
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/tool_bar.dart';
 
 class ProductDetailsPage extends StatelessWidget {
-  final int productId;
-  const ProductDetailsPage({super.key, required this.productId});
+  const ProductDetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    context.read<DetailsBloc>().add(DetailsFetchEvent(productId: productId));
 
     return Scaffold(
       body: Container(
+        height: double.infinity,
         color: theme.appColors.background,
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -40,7 +39,11 @@ class ProductDetailsPage extends StatelessWidget {
                   },
                   builder: (context, state) {
                     if (state is! DetailsSuccessfulFetching) {
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: theme.appColors.accent,
+                        ),
+                      );
                     }
 
                     final product = state.product;
@@ -48,11 +51,12 @@ class ProductDetailsPage extends StatelessWidget {
                     return Column(
                       children: [
                         TitleBar(
-                          title: product.reference,
-                          category: product.category.name,
+                          title: product.reference ?? '',
+                          category: product.category?.name ?? "",
                         ),
                         const Gap(25),
-                        IntrinsicHeight(
+                        SizedBox(
+                          height: 450,
                           child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -69,30 +73,42 @@ class ProductDetailsPage extends StatelessWidget {
                                       ],
                                     )),
                                 const Gap(25),
-                                const Expanded(
-                                    child: GeneralInformationPanel()),
+                                Expanded(
+                                  child:
+                                      GeneralInformationPanel(product: product),
+                                ),
                               ]),
                         ),
                         const Gap(25),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 600,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                  width: 450,
-                                  child: CrossRefsPanel(
-                                    crossRefs: product.crossRefs,
-                                    oeRefs: product.oeRefs,
-                                  )),
-                              const Gap(25),
-                              const Expanded(
-                                child: CompatibleVehiclesPanel(),
-                              )
-                            ],
-                          ),
-                        )
+                        Builder(builder: (context) {
+                          if (product.crossRefs.isEmpty &&
+                              product.oeRefs.isEmpty &&
+                              product.vehicles.isEmpty) {
+                            return const SizedBox();
+                          } else {
+                            return SizedBox(
+                              width: double.infinity,
+                              height: 600,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                      width: 450,
+                                      child: CrossRefsPanel(
+                                        crossRefs: product.crossRefs,
+                                        oeRefs: product.oeRefs,
+                                      )),
+                                  const Gap(25),
+                                  Expanded(
+                                    child: CompatibleVehiclesPanel(
+                                      vehicles: product.vehicles,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }
+                        })
                       ],
                     );
                   },

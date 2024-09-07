@@ -2,19 +2,32 @@ import 'package:gulf_catalog_app/features/catalog/domain/entities/vehicle.dart';
 
 class VehicleModel extends Vehicle {
   const VehicleModel({
-    required super.name,
-    required super.kw,
-    required super.hp,
-    required super.capacityCc,
-    required super.engine,
-    required super.bodyStyle,
-    required super.beginYearMonth,
-    required super.endYearMonth,
-    required super.updatedAt,
-  });
+    required num id,
+    required String name,
+    num? kw,
+    num? hp,
+    num? capacityCc,
+    String? engine,
+    String? bodyStyle,
+    DateTime? beginYearMonth,
+    DateTime? endYearMonth,
+    DateTime? updatedAt,
+  }) : super(
+          id: id,
+          name: name,
+          kw: kw,
+          hp: hp,
+          capacityCc: capacityCc,
+          engine: engine,
+          bodyStyle: bodyStyle,
+          beginYearMonth: beginYearMonth,
+          endYearMonth: endYearMonth,
+          updatedAt: updatedAt,
+        );
 
   factory VehicleModel.fromJson(Map<String, dynamic> json) {
     return VehicleModel(
+        id: json['id'],
         name: json['name'],
         kw: json['kw'],
         hp: json['hp'],

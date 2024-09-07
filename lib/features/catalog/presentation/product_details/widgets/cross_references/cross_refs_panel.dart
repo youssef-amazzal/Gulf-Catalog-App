@@ -89,6 +89,10 @@ class _CrossRefsPanelState extends State<CrossRefsPanel> {
 
   void _search(String? value) {
     setState(() {
+      // Normalize the query value
+      final normalizedValue =
+          value?.toLowerCase().replaceAll(RegExp(r'[^\d\w]'), '') ?? '';
+
       // Create a deep copy of the data list
       filterdData = List.from(data.map((e) {
         var copiedElement = e.copyWith(
@@ -98,8 +102,8 @@ class _CrossRefsPanelState extends State<CrossRefsPanel> {
         copiedElement.references = copiedElement.references
             .where((element) => element
                 .toLowerCase()
-                .replaceAll(RegExp(r'[\s-]'), '')
-                .contains(value!.toLowerCase()))
+                .replaceAll(RegExp(r'[^\d\w]'), '')
+                .contains(normalizedValue.toLowerCase()))
             .toList();
         return copiedElement;
       }).toList());

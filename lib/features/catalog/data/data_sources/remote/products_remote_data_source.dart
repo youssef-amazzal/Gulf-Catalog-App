@@ -46,11 +46,7 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
           )
         ''');
 
-      return data
-          .map((e) => ProductModel.fromJson(e))
-          .toList()
-          .reversed
-          .toList();
+      return data.map((e) => ProductModel.fromJson(e)).toList();
     } catch (e) {
       throw ServerException(message: e.toString());
     }
@@ -86,7 +82,7 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
             ref,
             mfr:manufacturers(id, name, logo)
           ),
-          vehicles(name, kw, hp, engine, begin_year_month, end_year_month)
+          vehicles(id, name, kw, hp, engine, begin_year_month, end_year_month)
         ''').eq('id', id);
 
       // print(data[0]['cross_refs']);

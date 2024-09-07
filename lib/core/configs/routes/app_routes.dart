@@ -36,8 +36,7 @@ final GoRouter appRoutes = GoRouter(navigatorKey: _rootNavigatorKey, routes: [
                 path: ':id',
                 parentNavigatorKey: _rootNavigatorKey,
                 builder: (context, state) => I18n(
-                  child: ProductDetailsPage(
-                      productId: int.parse(state.pathParameters['id'] ?? '-1')),
+                  child: const ProductDetailsPage(),
                 ),
               )
             ]),

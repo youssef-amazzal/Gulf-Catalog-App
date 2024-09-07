@@ -5,16 +5,17 @@ import 'package:gulf_catalog_app/features/catalog/domain/entities/cross_ref.dart
 import 'package:gulf_catalog_app/features/catalog/domain/entities/image.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/oe_ref.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/price.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/entities/section.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/vehicle.dart';
 
 class Product extends Equatable {
   final num id;
-  final num quantity;
-  final String reference;
+  final num? quantity;
+  final String? reference;
   final List<Section>? details;
 
-  final Brand brand;
-  final Category category;
+  final Brand? brand;
+  final Category? category;
 
   final Price? unitPrice;
   final List<Price> packPrices;
@@ -64,11 +65,4 @@ class Product extends Equatable {
       updatedAt
     ];
   }
-}
-
-class Section {
-  final String title;
-  final Map<String, dynamic> details;
-
-  Section({required this.title, required this.details});
 }

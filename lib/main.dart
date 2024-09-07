@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
             title: 'Gulf Catalog App',
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
-            themeMode: mode,
+            themeMode: ThemeMode.dark,
             routerConfig: appRoutes,
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,

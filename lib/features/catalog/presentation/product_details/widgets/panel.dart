@@ -15,7 +15,6 @@ class Panel extends StatelessWidget {
           border: Border.all(color: theme.appColors.border, width: 1.5),
           borderRadius: BorderRadius.circular(14)),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(

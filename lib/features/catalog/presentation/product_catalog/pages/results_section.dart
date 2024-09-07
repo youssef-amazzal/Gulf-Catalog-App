@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/product.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/bloc/catalog/catalog_bloc.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/tool_bar.dart';
@@ -22,6 +23,7 @@ class _ResultsSectionState extends State<ResultsSection> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return Column(children: [
       const ToolBar(),
       const Gap(20),
@@ -43,7 +45,11 @@ class _ResultsSectionState extends State<ResultsSection> {
                 mainAxisSpacing: 20,
                 children: _generateCards(state.products));
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child: CircularProgressIndicator(
+                color: theme.appColors.accent,
+              ),
+            );
           }
         },
       ))
