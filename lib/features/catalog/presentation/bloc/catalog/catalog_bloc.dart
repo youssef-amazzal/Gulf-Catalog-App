@@ -22,7 +22,8 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
 
   void _onFetchProducts(
       CatalogFetchEvent event, Emitter<CatalogState> emit) async {
-    final response = await _fetchProducts();
+    final response = await _fetchProducts(SearchParams(
+        reference: event.reference, limit: event.limit, offset: event.offset));
     // print(response);
 
     response.fold(

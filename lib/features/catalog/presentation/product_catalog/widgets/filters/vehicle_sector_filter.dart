@@ -10,10 +10,12 @@ class VehicleSectorFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dropDownController = DropDownController<String>();
     final theme = context.theme;
     return LabeledWidget(
       label: "VEHICLE SECTOR",
       child: DropDown(
+        controller: dropDownController,
         hintText: 'All Sectors',
         hintIcon: Icons.account_balance,
         items: _getSectors(),

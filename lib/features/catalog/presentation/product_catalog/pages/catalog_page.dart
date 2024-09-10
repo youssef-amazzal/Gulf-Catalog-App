@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'filter_panel.dart';
+import 'filter_section.dart';
 import 'results_section.dart';
 
 class CatalogPage extends StatelessWidget {
@@ -11,7 +11,7 @@ class CatalogPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Row(
-      children: [FilterPanel(), Gap(20), Expanded(child: ResultsSection())],
+      children: [FilterSection(), Gap(20), Expanded(child: ResultsSection())],
     );
   }
 }

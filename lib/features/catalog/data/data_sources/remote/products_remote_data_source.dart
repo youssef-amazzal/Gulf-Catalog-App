@@ -5,8 +5,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract class ProductsRemoteDataSource {
   Future<List<ProductModel>> getProducts({
     String? reference,
-    int? category,
-    String? sortOption,
     int? limit,
     int? offset,
   });
@@ -24,27 +22,13 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
   @override
   Future<List<ProductModel>> getProducts({
     String? reference,
-    int? category,
-    String? sortOption,
     int? limit = 1000,
     int? offset = 0,
   }) async {
     try {
-      List<Map<String, dynamic>> data = await client.from('products').select('''
-          id,
-          ref,
-          category:category_id(id, name),
-          brand:brand_id(id, name),
-          quantity,
-          thumbnail:thumbnail(id, url),
-          prices(
-            id,
-            price,
-            quantity,
-            discount,
-            expiration_date
-          )
-        ''');
+      List<Map<String, dynamic>> data = await client.rpc(
+          'get_products_by_search_term',
+          params: {'search_term': reference ?? ''});
 
       return data.map((e) => ProductModel.fromJson(e)).toList();
     } catch (e) {

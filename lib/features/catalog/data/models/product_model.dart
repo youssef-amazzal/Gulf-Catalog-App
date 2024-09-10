@@ -31,15 +31,14 @@ class ProductModel extends Product {
     final prices = _parsePrices(json['prices']);
     final unitPrice = _findUnitPrice(prices);
     final packPrices = _findPackPrices(prices);
-
     return ProductModel(
       id: json['id'],
       reference: json['ref'],
+      quantity: json['quantity'],
       brand: json['brand'] != null ? BrandModel.fromJson(json['brand']) : null,
       category: json['category'] != null
           ? CategoryModel.fromJson(json['category'])
           : null,
-      quantity: json['quantity'],
       details: _parseDetails(json['details']),
       thumbnail: _parseThumbnail(json['thumbnail']),
       images: _parseImages(json['images']),

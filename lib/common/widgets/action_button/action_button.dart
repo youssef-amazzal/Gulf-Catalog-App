@@ -10,6 +10,7 @@ class ActionButton extends StatelessWidget {
   final double? iconSize;
   final Color? fillColor;
   final bool isOutlined;
+  final BorderRadius? radius;
   final Function() onPressed;
 
   const ActionButton({
@@ -20,6 +21,7 @@ class ActionButton extends StatelessWidget {
     this.iconSize,
     this.fillColor,
     this.isOutlined = false,
+    this.radius,
     required this.onPressed,
   });
 
@@ -68,7 +70,7 @@ class ActionButton extends StatelessWidget {
           side: BorderSide(
               color: isOutlined ? onSurfaceColor : Colors.transparent,
               width: 1.5),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: radius ?? BorderRadius.circular(14),
         ),
         backgroundColor: surfaceColor,
         foregroundColor: onSurfaceColor,

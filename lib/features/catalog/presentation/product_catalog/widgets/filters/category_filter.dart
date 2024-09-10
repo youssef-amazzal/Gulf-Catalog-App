@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gulf_catalog_app/common/widgets/drop_down.dart';
 import 'package:gulf_catalog_app/common/widgets/labeled_widget.dart';
 import 'package:gulf_catalog_app/common/widgets/svg_icon.dart';
 import 'package:gulf_catalog_app/core/configs/assets/app_vectors.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/bloc/filter/filter_cubit.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/i18n/categories.i18n.dart';
 
 class CategoryFilter extends StatelessWidget {
   const CategoryFilter({
@@ -14,186 +17,193 @@ class CategoryFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final dropDownController = DropDownController<CategoryOption>();
+
     return LabeledWidget(
       label: "CATEGORY",
-      child: DropDown<_CatalogCategory>(
-        hintText: 'All Categories',
-        hintIcon: Icons.category_rounded,
-        items: _getCategories(),
-        itemBuilder: (item) => DropdownMenuItem(
-          value: item,
-          enabled: item.type == DropDownItemType.data,
-          child: item.type == DropDownItemType.header
-              ? Text(
-                  item.category,
-                  style: theme.appTextStyles.body1.copyWith(fontSize: 13),
-                  overflow: TextOverflow.ellipsis,
-                )
-              : Row(
-                  children: [
-                    const Gap(20),
-                    Expanded(
-                      child: Text(
-                        item.category,
-                        style: theme.appTextStyles.body1.copyWith(
-                            fontSize: 13, fontWeight: FontWeight.normal),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-        ),
-        onSearch: (item, query) {
-          return item.value!.type == DropDownItemType.header ||
-              item.value!.category.toLowerCase().contains(query.toLowerCase());
+      child: BlocListener<FilterCubit, FilterState>(
+        listener: (context, state) {
+          if (state is FilteredState && state.category == null) {
+            dropDownController.setSelectedValue(null);
+          }
         },
+        child: DropDown<CategoryOption>(
+          controller: dropDownController,
+          onChanged: (selected) {
+            context.read<FilterCubit>().filter((currentState, emit) {
+              final newState = currentState.copyWith(category: selected!.name);
+              emit(newState);
+            });
+          },
+          hintText: 'All Categories',
+          hintIcon: Icons.category_rounded,
+          items: _getCategories(),
+          itemBuilder: (item) => DropdownMenuItem(
+            value: item,
+            enabled: item.type == DropDownItemType.data,
+            child: item.type == DropDownItemType.header
+                ? Text(
+                    item.name,
+                    style: theme.appTextStyles.body1.copyWith(fontSize: 13),
+                    overflow: TextOverflow.ellipsis,
+                  )
+                : Row(
+                    children: [
+                      const Gap(20),
+                      Expanded(
+                        child: Text(
+                          item.name.i18n,
+                          style: theme.appTextStyles.body1.copyWith(
+                              fontSize: 13, fontWeight: FontWeight.normal),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
+          onSearch: (item, query) {
+            return item.value!.type == DropDownItemType.header ||
+                item.value!.name.i18n
+                    .toLowerCase()
+                    .contains(query.toLowerCase());
+          },
+        ),
       ),
     );
   }
 
-  List<_CatalogCategory> _getCategories() {
+  List<CategoryOption> _getCategories() {
     return [
-      _CatalogCategory(
-          category: 'Engine Maintenance',
-          type: DropDownItemType.header,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Filters',
+      CategoryOption(
+        name: 'Engine Maintenance',
+        type: DropDownItemType.header,
+        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+      ),
+      ...categoryMapping['Engine Maintenance']!.map(
+        (item) => CategoryOption(
+          name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Additives',
+          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        ),
+      ),
+      CategoryOption(
+        name: 'Timing and Drive',
+        type: DropDownItemType.header,
+        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+      ),
+      ...categoryMapping['Timing and Drive']!.map(
+        (item) => CategoryOption(
+          name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Lubricants',
+          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        ),
+      ),
+      CategoryOption(
+        name: 'Clutch System',
+        type: DropDownItemType.header,
+        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+      ),
+      ...categoryMapping['Clutch System']!.map(
+        (item) => CategoryOption(
+          name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Braking System',
-          type: DropDownItemType.header,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Brake Discs',
+          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        ),
+      ),
+      CategoryOption(
+        name: 'Suspension System',
+        type: DropDownItemType.header,
+        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+      ),
+      ...categoryMapping['Suspension System']!.map(
+        (item) => CategoryOption(
+          name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Brake Shoes',
+          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        ),
+      ),
+      CategoryOption(
+        name: 'Cooling System',
+        type: DropDownItemType.header,
+        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+      ),
+      ...categoryMapping['Cooling System']!.map(
+        (item) => CategoryOption(
+          name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Brake Pads',
+          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        ),
+      ),
+      CategoryOption(
+        name: 'Braking System',
+        type: DropDownItemType.header,
+        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+      ),
+      ...categoryMapping['Braking System']!.map(
+        (item) => CategoryOption(
+          name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Wear Indicators',
+          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        ),
+      ),
+      CategoryOption(
+        name: 'Battery',
+        type: DropDownItemType.header,
+        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+      ),
+      ...categoryMapping['Battery']!.map(
+        (item) => CategoryOption(
+          name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Wheel Cylinders',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Brake Master Cylinders',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Clutch System',
-          type: DropDownItemType.header,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Clutch Master Cylinders',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Clutch Slave Cylinders',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Clutch Release Bearings',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Suspension System',
-          type: DropDownItemType.header,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Shock Absorbers',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Axle Suspension',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Wheel Bearings',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Timing and Drive',
-          type: DropDownItemType.header,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Timing Belts',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Timing Kits',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Timing Chains',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Cooling System',
-          type: DropDownItemType.header,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Water Pumps',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Radiator Fans',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Radiators',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Coolants',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Battery',
-          type: DropDownItemType.header,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Jet Battery',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'Lead Acid Batteries',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'AGM Batteries',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15)),
-      _CatalogCategory(
-          category: 'EFB Batteries',
-          type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15))
+          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        ),
+      ),
     ];
   }
 }
 
-class _CatalogCategory {
-  final String category;
-  final DropDownItemType type;
-  final SvgIcon icon;
+const categoryMapping = {
+  'Engine Maintenance': [
+    'additive',
+    'lubrifiant',
+    'filter_air',
+    'filter_carburant',
+    'filter_huile',
+    'filter_habitacle',
+    'filter_dessiccateur',
+    'filter_liquide',
+    'filter_hydraulique'
+  ],
+  'Timing and Drive': ['courroie', 'kit_courroie', 'kit_chain'],
+  'Clutch System': [
+    'butee_hydraulique',
+    'cylindre_recepteur',
+    'cylindre_emetteur',
+    'maitre_cylindre_embrayage'
+  ],
+  'Suspension System': ['amortisseur', 'roulement_roue'],
+  'Cooling System': ['radiateur', 'pompe_eau'],
+  'Battery': ['battery'],
+  'Braking System': [
+    'machoire_frein',
+    'plaquette',
+    'maitre_cylindre',
+    'cylindre_roue',
+    'disque',
+    'indicateur_usure'
+  ],
+};
 
-  _CatalogCategory(
-      {required this.category, required this.type, required this.icon});
+class CategoryOption {
+  final String name;
+  final DropDownItemType type;
+  // final int value;
+  final SvgIcon? icon;
+
+  CategoryOption({
+    required this.name,
+    required this.type,
+    // required this.value,
+    this.icon,
+  });
 }

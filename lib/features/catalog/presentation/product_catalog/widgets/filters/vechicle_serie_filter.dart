@@ -10,10 +10,12 @@ class VechicleSerieFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dropDownController = DropDownController<String>();
     final theme = context.theme;
     return LabeledWidget(
       label: "VEHICLE SERIE",
       child: DropDown<String>(
+        controller: dropDownController,
         hintText: 'All Series',
         hintIcon: Icons.calendar_month,
         items: null,

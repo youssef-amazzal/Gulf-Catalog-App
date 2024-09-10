@@ -1,11 +1,18 @@
 part of 'catalog_bloc.dart';
 
 @immutable
-sealed class CatalogEvent extends Equatable {
+sealed class CatalogEvent {
   const CatalogEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
-final class CatalogFetchEvent extends CatalogEvent {}
+final class CatalogFetchEvent extends CatalogEvent {
+  final String? reference;
+  final int? limit;
+  final int? offset;
+
+  const CatalogFetchEvent({
+    this.reference,
+    this.limit,
+    this.offset,
+  });
+}

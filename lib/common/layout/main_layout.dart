@@ -11,21 +11,24 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(fit: StackFit.expand, children: [
-        Container(
-          color: context.theme.appColors.background,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-          child: Column(children: [
-            const TopNavBar(),
-            const Gap(30),
-            Expanded(
-              child: child,
-            )
-          ]),
-        )
-      ]),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+            color: context.theme.appColors.background,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+            child: Column(children: [
+              const TopNavBar(),
+              const Gap(30),
+              Expanded(
+                child: child,
+              ),
+            ]),
+          ),
+        ],
+      ),
     );
   }
 }

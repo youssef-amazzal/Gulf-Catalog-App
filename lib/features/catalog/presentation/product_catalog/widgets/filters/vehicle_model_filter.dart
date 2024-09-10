@@ -10,10 +10,12 @@ class VehicleModelFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dropDownController = DropDownController<String>();
     final theme = context.theme;
     return LabeledWidget(
       label: "VEHICLE MODEL",
       child: DropDown<String>(
+        controller: dropDownController,
         hintText: 'All Models',
         hintIcon: Icons.directions_car,
         items: null,

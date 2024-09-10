@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/bloc/filter/filter_cubit.dart';
 
 import 'package:gulf_catalog_app/features/catalog/presentation/bloc/details/details_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -67,6 +68,7 @@ class _MyAppState extends State<MyApp> {
         providers: [
           BlocProvider(create: (_) => ThemeCubit()),
           BlocProvider(create: (_) => serviceLocator<AppUserCubit>()),
+          BlocProvider(create: (_) => serviceLocator<FilterCubit>()),
           BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
           BlocProvider(create: (_) => serviceLocator<CatalogBloc>()),
           BlocProvider(create: (_) => serviceLocator<DetailsBloc>()),

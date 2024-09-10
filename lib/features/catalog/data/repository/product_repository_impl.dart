@@ -12,9 +12,14 @@ class ProductRepositoryImpl implements ProductRepository {
       : _productsApiService = source;
 
   @override
-  Future<Either<Failure, List<Product>>> getProducts() async {
+  Future<Either<Failure, List<Product>>> getProducts({
+    String? reference,
+    int? limit,
+    int? offset,
+  }) async {
     try {
-      final products = await _productsApiService.getProducts();
+      final products = await _productsApiService.getProducts(
+          reference: reference, limit: limit, offset: offset);
 
       return right(products);
     } on ServerException catch (e) {
