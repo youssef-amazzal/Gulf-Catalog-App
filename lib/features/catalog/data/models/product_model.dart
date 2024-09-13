@@ -25,6 +25,7 @@ class ProductModel extends Product {
     required super.vehicles,
     required super.crossRefs,
     required super.updatedAt,
+    required super.isPinned,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -40,6 +41,7 @@ class ProductModel extends Product {
           ? CategoryModel.fromJson(json['category'])
           : null,
       details: _parseDetails(json['details']),
+      isPinned: json['is_pinned'],
       thumbnail: _parseThumbnail(json['thumbnail']),
       images: _parseImages(json['images']),
       unitPrice: unitPrice,

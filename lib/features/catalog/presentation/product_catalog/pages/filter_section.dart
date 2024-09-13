@@ -5,6 +5,7 @@ import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 import 'package:gulf_catalog_app/features/catalog/catalog.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/bloc/filter/filter_cubit.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/category_filter.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/pin_filter.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/sort_option_filter.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/status_filter.dart';
 import 'package:gulf_catalog_app/common/models/my_group_button_options.dart';
@@ -76,7 +77,7 @@ class FilterPanel extends StatelessWidget {
     final theme = context.theme;
     const double panelWidth = 300;
     const double panelPadding = 15;
-    const double statusButtonWidth = (panelWidth - panelPadding * 2 - 10) / 2;
+    const double halfButtonWidth = (panelWidth - panelPadding * 2 - 10) / 2;
 
     return Container(
       clipBehavior: Clip.antiAlias,
@@ -99,20 +100,35 @@ class FilterPanel extends StatelessWidget {
                     children: [
                       StatusFilter(
                         options: [
-                          MyGroupButtonOptions(
+                          MyStatusButtonOptions(
                             label: "All",
                             width: double.infinity,
                             status: Availability.all,
                           ),
-                          MyGroupButtonOptions(
+                          MyStatusButtonOptions(
                             label: "In Stock",
-                            width: statusButtonWidth,
+                            width: halfButtonWidth,
                             status: Availability.inStock,
                           ),
-                          MyGroupButtonOptions(
+                          MyStatusButtonOptions(
                             label: "Out of Stock",
-                            width: statusButtonWidth,
+                            width: halfButtonWidth,
                             status: Availability.outOfStock,
+                          ),
+                        ],
+                      ),
+                      Gap(20),
+                      PinFilter(
+                        options: [
+                          MyPinButtonOptions(
+                            label: "Unpinned",
+                            width: halfButtonWidth,
+                            pinState: PinState.unpinned,
+                          ),
+                          MyPinButtonOptions(
+                            label: "Pinned",
+                            width: halfButtonWidth,
+                            pinState: PinState.pinned,
                           ),
                         ],
                       ),

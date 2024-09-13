@@ -13,6 +13,7 @@ class Product extends Equatable {
   final num? quantity;
   final String? reference;
   final List<Section>? details;
+  final bool isPinned;
 
   final Brand? brand;
   final Category? category;
@@ -36,6 +37,7 @@ class Product extends Equatable {
     required this.category,
     required this.quantity,
     required this.details,
+    required this.isPinned,
     required this.thumbnail,
     required this.images,
     required this.unitPrice,
@@ -57,6 +59,7 @@ class Product extends Equatable {
       packPrices,
       brand,
       category,
+      isPinned,
       details,
       images,
       oeRefs,

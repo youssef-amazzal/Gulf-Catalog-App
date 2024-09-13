@@ -46,6 +46,7 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
           brand:brand_id(id, name, logo),
           quantity,
           details,
+          is_pinned,
           images!product_images(
             id,
             url

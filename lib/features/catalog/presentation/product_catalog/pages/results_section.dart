@@ -57,6 +57,17 @@ class _ResultsSectionState extends State<ResultsSection> {
                       break;
                   }
 
+                  switch (stockState.pinState) {
+                    case PinState.pinned:
+                      products = products.where((p) => p.isPinned).toList();
+                      break;
+                    case PinState.unpinned:
+                      products = products.where((p) => !p.isPinned).toList();
+                      break;
+                    default:
+                      break;
+                  }
+
                   if (stockState.category != null) {
                     products = products
                         .where((p) => p.category!.name == stockState.category)
