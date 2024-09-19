@@ -2,6 +2,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
+import 'package:gulf_catalog_app/core/configs/theme/new/app_theme.dart';
+import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
 
 class DropDown<T> extends StatefulWidget {
   final List<T>? items;
@@ -9,7 +11,6 @@ class DropDown<T> extends StatefulWidget {
   final IconData hintIcon;
   final String hintText;
   final String? disabledHintText;
-  final bool Function(DropdownMenuItem<T> item, String value)? onSearch;
   final void Function(T?)? onChanged;
   final DropDownController<T> controller;
 
@@ -20,7 +21,6 @@ class DropDown<T> extends StatefulWidget {
     required this.hintIcon,
     required this.hintText,
     this.disabledHintText,
-    this.onSearch,
     this.onChanged,
     required this.controller,
   });
@@ -33,6 +33,8 @@ class _DropDownState<T> extends State<DropDown<T>> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
     return ListenableBuilder(
         listenable: widget.controller,
@@ -44,14 +46,19 @@ class _DropDownState<T> extends State<DropDown<T>> {
                 children: [
                   Icon(
                     widget.hintIcon,
-                    size: 20,
-                    color: theme.appColors.onSurfaceSecondary1,
+                    size: context.responsive(14, xl: 20),
+                    color: colorScheme.onSurfaceVariant,
                   ),
                   const Gap(10),
                   Expanded(
                     child: Text(
                       widget.hintText,
-                      style: theme.appTextStyles.body1.copyWith(fontSize: 13.5),
+                      style: context.responsive(
+                        textTheme.labelMedium!
+                            .copyWith(color: colorScheme.onSurfaceVariant),
+                        xl: textTheme.labelLarge!
+                            .copyWith(color: colorScheme.onSurfaceVariant),
+                      ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -61,15 +68,15 @@ class _DropDownState<T> extends State<DropDown<T>> {
                 children: [
                   Icon(
                     widget.hintIcon,
-                    size: 20,
-                    color: theme.appColors.onSurfaceSecondary1,
+                    size: context.responsive(14, xl: 20),
+                    color: colorScheme.onSurfaceVariant,
                   ),
                   const Gap(10),
                   Expanded(
                     child: Text(
                       widget.disabledHintText ?? widget.hintText,
-                      style:
-                          theme.appTextStyles.bodyAlt1.copyWith(fontSize: 13.5),
+                      style: textTheme.labelLarge!
+                          .copyWith(color: colorScheme.onSurfaceVariant),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -87,72 +94,40 @@ class _DropDownState<T> extends State<DropDown<T>> {
                 padding: const EdgeInsets.only(right: 14),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: theme.appColors.surface2,
+                  color: colorScheme.surfaceDim,
                 ),
               ),
               iconStyleData: IconStyleData(
                 icon: const Icon(
                   Icons.arrow_forward_ios_outlined,
                 ),
-                iconSize: 14,
-                iconEnabledColor: theme.appColors.onSurfaceSecondary1,
+                iconSize: context.responsive(12, xl: 14),
+                iconEnabledColor: colorScheme.onSurfaceVariant,
                 iconDisabledColor: Colors.grey,
               ),
               dropdownStyleData: DropdownStyleData(
                 elevation: 0,
-                maxHeight: 400,
+                maxHeight: context.responsive(300, xl: 500),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: theme.appColors.surface2,
-                    border:
-                        Border.all(color: theme.appColors.border, width: 2)),
+                  borderRadius: MAppTheme.kRadius,
+                  color: colorScheme.surface,
+                  boxShadow: [
+                    BoxShadow(
+                      color: colorScheme.onSurfaceVariant.withOpacity(0.2),
+                      spreadRadius: 10,
+                      blurRadius: 20,
+                    )
+                  ],
+                ),
                 offset: const Offset(0, -10),
                 scrollbarTheme: const ScrollbarThemeData(
                   radius: Radius.circular(8),
                 ),
               ),
-              menuItemStyleData: const MenuItemStyleData(
-                height: 40,
-                padding: EdgeInsets.symmetric(horizontal: 14),
+              menuItemStyleData: MenuItemStyleData(
+                height: context.responsive(35, xl: 40),
+                padding: const EdgeInsets.symmetric(horizontal: 14),
               ),
-              dropdownSearchData: widget.onSearch == null
-                  ? null
-                  : DropdownSearchData(
-                      searchController: widget.controller.textEditingController,
-                      searchInnerWidgetHeight: 60,
-                      searchInnerWidget: Container(
-                        height: 60,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 5,
-                          horizontal: 8,
-                        ),
-                        child: TextFormField(
-                          expands: true,
-                          maxLines: null,
-                          controller: widget.controller.textEditingController,
-                          cursorColor: theme.appColors.accent,
-                          decoration: InputDecoration(
-                              isDense: true,
-                              filled: true,
-                              fillColor: theme.appColors.onAccent,
-                              hintText: 'Search...',
-                              hintStyle: theme.appTextStyles.bodyAlt1
-                                  .copyWith(fontSize: 13),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                      color: theme.appColors.border)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: theme.appColors.border),
-                                  borderRadius: BorderRadius.circular(8))),
-                        ),
-                      ),
-                      searchMatchFn: widget.onSearch ??
-                          (item, searchValue) {
-                            return true;
-                          },
-                    ),
               //This to clear the search value when you close the menu
               onMenuStateChange: (isOpen) {
                 if (!isOpen) {

@@ -18,10 +18,4 @@ class FetchProducts implements Usecase<List<Product>, SearchParams> {
   }
 }
 
-class SearchParams {
-  final String? reference;
-  final int? limit;
-  final int? offset;
-
-  SearchParams({this.reference, this.limit, this.offset});
-}
+typedef SearchParams = ({String? reference, int? limit, int? offset});

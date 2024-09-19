@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
+import 'package:gulf_catalog_app/core/configs/theme/new/app_theme.dart';
+import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
 
 class Panel extends StatelessWidget {
   final Widget child;
@@ -9,41 +11,48 @@ class Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Container(
       decoration: BoxDecoration(
-          color: theme.appColors.surface1,
-          border: Border.all(color: theme.appColors.border, width: 1.5),
-          borderRadius: BorderRadius.circular(14)),
+        color: colorScheme.surface,
+        // border: Border.all(color: colorScheme.outline, width: 0.5),
+        borderRadius: MAppTheme.kRadius,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(14), topRight: Radius.circular(14)),
-            child: SizedBox(
+            borderRadius: BorderRadius.only(
+              topLeft: MAppTheme.kRadius.topLeft,
+              topRight: MAppTheme.kRadius.topRight,
+            ),
+            child: Container(
+              color: colorScheme.inverseSurface,
               width: double.infinity,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                padding: EdgeInsets.all(context.responsive(20, xl: 25)),
                 child: Text(
                   title,
-                  style: theme.appTextStyles.h1
-                      .copyWith(fontSize: 20, fontWeight: FontWeight.w700),
+                  style: context.responsive(
+                    textTheme.titleMedium!
+                        .copyWith(color: colorScheme.onInverseSurface),
+                    xl: textTheme.titleLarge!
+                        .copyWith(color: colorScheme.onInverseSurface),
+                  ),
                 ),
               ),
             ),
           ),
-          Divider(
-            height: 0,
-            color: theme.appColors.border,
-            thickness: 2,
-          ),
           Expanded(
             child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(14),
-                    bottomRight: Radius.circular(14)),
-                child: child),
+              borderRadius: BorderRadius.only(
+                bottomLeft: MAppTheme.kRadius.bottomLeft,
+                bottomRight: MAppTheme.kRadius.bottomRight,
+              ),
+              child: child,
+            ),
           )
         ],
       ),

@@ -6,8 +6,9 @@ import 'package:gulf_catalog_app/common/widgets/labeled_widget.dart';
 import 'package:gulf_catalog_app/common/widgets/svg_icon.dart';
 import 'package:gulf_catalog_app/core/configs/assets/app_vectors.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
-import 'package:gulf_catalog_app/features/catalog/presentation/bloc/filter/filter_cubit.dart';
-import 'package:gulf_catalog_app/features/catalog/presentation/i18n/categories.i18n.dart';
+import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
+import 'package:gulf_catalog_app/features/catalog/catalog.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/i18n/catalog.i18n.dart';
 
 class CategoryFilter extends StatelessWidget {
   const CategoryFilter({
@@ -17,25 +18,24 @@ class CategoryFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     final dropDownController = DropDownController<CategoryOption>();
 
     return LabeledWidget(
-      label: "CATEGORY",
-      child: BlocListener<FilterCubit, FilterState>(
+      label: "category_label",
+      child: BlocListener<CatalogBloc, CatalogState>(
         listener: (context, state) {
-          if (state is FilteredState && state.category == null) {
+          if (state is CatalogInitial || state is CatalogResetState) {
             dropDownController.setSelectedValue(null);
           }
         },
         child: DropDown<CategoryOption>(
           controller: dropDownController,
           onChanged: (selected) {
-            context.read<FilterCubit>().filter((currentState, emit) {
-              final newState = currentState.copyWith(category: selected!.name);
-              emit(newState);
-            });
+            context.read<CatalogBloc>().filter(category: selected?.name);
           },
-          hintText: 'All Categories',
+          hintText: 'category_hint'.i18n,
           hintIcon: Icons.category_rounded,
           items: _getCategories(),
           itemBuilder: (item) => DropdownMenuItem(
@@ -43,30 +43,29 @@ class CategoryFilter extends StatelessWidget {
             enabled: item.type == DropDownItemType.data,
             child: item.type == DropDownItemType.header
                 ? Text(
-                    item.name,
-                    style: theme.appTextStyles.body1.copyWith(fontSize: 13),
+                    item.name.i18n,
+                    style: context.responsive(
+                      textTheme.labelMedium,
+                      xl: textTheme.labelLarge,
+                    ),
                     overflow: TextOverflow.ellipsis,
                   )
                 : Row(
                     children: [
-                      const Gap(20),
+                      const Gap(10),
                       Expanded(
                         child: Text(
                           item.name.i18n,
-                          style: theme.appTextStyles.body1.copyWith(
-                              fontSize: 13, fontWeight: FontWeight.normal),
+                          style: context.responsive(
+                            textTheme.bodyMedium,
+                            xl: textTheme.bodyLarge,
+                          ),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
                   ),
           ),
-          onSearch: (item, query) {
-            return item.value!.type == DropDownItemType.header ||
-                item.value!.name.i18n
-                    .toLowerCase()
-                    .contains(query.toLowerCase());
-          },
         ),
       ),
     );
@@ -77,85 +76,85 @@ class CategoryFilter extends StatelessWidget {
       CategoryOption(
         name: 'Engine Maintenance',
         type: DropDownItemType.header,
-        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
       ),
       ...categoryMapping['Engine Maintenance']!.map(
         (item) => CategoryOption(
           name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+          icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
         ),
       ),
       CategoryOption(
         name: 'Timing and Drive',
         type: DropDownItemType.header,
-        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
       ),
       ...categoryMapping['Timing and Drive']!.map(
         (item) => CategoryOption(
           name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+          icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
         ),
       ),
       CategoryOption(
         name: 'Clutch System',
         type: DropDownItemType.header,
-        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
       ),
       ...categoryMapping['Clutch System']!.map(
         (item) => CategoryOption(
           name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+          icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
         ),
       ),
       CategoryOption(
         name: 'Suspension System',
         type: DropDownItemType.header,
-        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
       ),
       ...categoryMapping['Suspension System']!.map(
         (item) => CategoryOption(
           name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+          icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
         ),
       ),
       CategoryOption(
         name: 'Cooling System',
         type: DropDownItemType.header,
-        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
       ),
       ...categoryMapping['Cooling System']!.map(
         (item) => CategoryOption(
           name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+          icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
         ),
       ),
       CategoryOption(
         name: 'Braking System',
         type: DropDownItemType.header,
-        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
       ),
       ...categoryMapping['Braking System']!.map(
         (item) => CategoryOption(
           name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+          icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
         ),
       ),
       CategoryOption(
         name: 'Battery',
         type: DropDownItemType.header,
-        icon: const SvgIcon(icon: AppVectors.package, height: 15),
+        icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
       ),
       ...categoryMapping['Battery']!.map(
         (item) => CategoryOption(
           name: item,
           type: DropDownItemType.data,
-          icon: const SvgIcon(icon: AppVectors.package, height: 15),
+          icon: const SvgIcon(icon: AppVectors.solidPackage, height: 15),
         ),
       ),
     ];

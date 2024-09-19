@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/i18n/catalog.i18n.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/vehicle.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/panel.dart';
@@ -30,9 +31,13 @@ class _CompatibleVehiclesPanelState extends State<CompatibleVehiclesPanel> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     final format = DateFormat('yyyy-MM');
+
     return Panel(
-      title: 'Compatible Vehicles',
+      title: 'compatible_vehicles'.i18n,
       child: Column(
         children: [
           Row(
@@ -40,7 +45,7 @@ class _CompatibleVehiclesPanelState extends State<CompatibleVehiclesPanel> {
             children: [
               Expanded(
                 child: PanelSearchBar(
-                  hintText: "Search for model...",
+                  hintText: "search_hint".i18n,
                   onChanged: _search,
                 ),
               )

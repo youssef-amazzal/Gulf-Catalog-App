@@ -21,41 +21,45 @@ class TopNavBar extends StatelessWidget {
     final ThemeData theme = context.theme;
     return SizedBox(
       height: 50,
-      child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        SvgIcon(
-            icon: theme.brightness == Brightness.dark
-                ? AppVectors.darkLogo
-                : AppVectors.lightLogo,
-            height: 40),
-        const Spacer(),
-        BackButtonListener(
-          onBackButtonPressed: () =>
-              fixSelectionOnBackButtonPressed(context, controller),
-          child: GroupButton<MyItem>(
-            controller: controller,
-            buttons: pages,
-            onSelected: (item, i, selected) {
-              context.go(item.path);
-            },
-            buttonBuilder: (isSelected, data, context) => NavBarButton(
-              icon: data.icon,
-              text: data.name,
-              isSelected: isSelected,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SvgIcon(
+              icon: theme.brightness == Brightness.dark
+                  ? AppVectors.darkLogo
+                  : AppVectors.lightLogo,
+              height: 40),
+          const Spacer(),
+          BackButtonListener(
+            onBackButtonPressed: () =>
+                fixSelectionOnBackButtonPressed(context, controller),
+            child: GroupButton<MyItem>(
+              controller: controller,
+              buttons: pages,
+              onSelected: (item, i, selected) {
+                context.go(item.path);
+              },
+              buttonBuilder: (isSelected, data, context) => NavBarButton(
+                icon: data.icon,
+                text: data.name,
+                isSelected: isSelected,
+              ),
             ),
           ),
-        ),
-        const Spacer(),
-        ActionButton(
-          onPressed: () => {},
-          icon: AppVectors.settings,
-          iconColor: theme.appColors.onSurfaceSecondary2,
-        ),
-        const Gap(10),
-        ActionButton(
+          const Spacer(),
+          ActionButton(
             onPressed: () => {},
-            icon: AppVectors.bell,
-            iconColor: theme.appColors.onSurfaceSecondary2)
-      ]),
+            icon: AppVectors.solidSettings,
+            iconColor: theme.appColors.onSurfaceSecondary2,
+          ),
+          const Gap(10),
+          ActionButton(
+            onPressed: () => {},
+            icon: AppVectors.solidBell,
+            iconColor: theme.appColors.onSurfaceSecondary2,
+          )
+        ],
+      ),
     );
   }
 }
@@ -77,14 +81,14 @@ final pages = <MyItem>[
     index: 0,
     name: 'Catalog',
     path: '/catalog',
-    icon: AppVectors.home,
+    icon: AppVectors.solidHome,
   ),
   MyItem(
       index: 1,
       name: 'Dashboard',
       path: '/dashboard',
-      icon: AppVectors.dashboard),
-  MyItem(index: 2, name: 'Clients', path: '/', icon: AppVectors.client)
+      icon: AppVectors.solidCategories),
+  MyItem(index: 2, name: 'Clients', path: '/', icon: AppVectors.solidClients)
 ];
 
 Future<bool> fixSelectionOnBackButtonPressed(

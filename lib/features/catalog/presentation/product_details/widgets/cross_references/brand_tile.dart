@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
+import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/cross_references/reference_text.dart';
 
 class BrandTile extends StatelessWidget {
@@ -21,29 +22,39 @@ class BrandTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Container(
       decoration: BoxDecoration(
-          border: Border(
-              bottom: BorderSide(color: theme.appColors.border, width: 1.5))),
+        border: Border.symmetric(
+          horizontal: BorderSide(
+            color: colorScheme.outline.withOpacity(0.3),
+            width: 0.5,
+          ),
+        ),
+      ),
       child: ExpansionTile(
           tilePadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
           collapsedBackgroundColor: index % 2 == 0
-              ? theme.appColors.surface2
-              : theme.appColors.surface1,
+              ? colorScheme.surfaceDim.withOpacity(0.3)
+              : colorScheme.surface,
           backgroundColor: index % 2 == 0
-              ? theme.appColors.surface2
-              : theme.appColors.surface1,
-          iconColor: theme.appColors.accent,
-          collapsedIconColor: theme.appColors.accent,
+              ? colorScheme.surfaceDim.withOpacity(0.3)
+              : colorScheme.surface,
+          iconColor: colorScheme.primary,
+          collapsedIconColor: colorScheme.primary,
           shape: Border.all(color: Colors.transparent, width: 0),
           title: Row(
             children: [
               Container(
-                height: 40,
-                width: 80,
+                height: context.responsive(40, xl: 50),
+                width: context.responsive(60, xl: 70),
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: context.theme.brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.transparent,
                   // border:
                   //     Border.all(color: Colors.blueGrey[800]!, width: 0.5),
                   borderRadius: BorderRadius.circular(4),
@@ -61,25 +72,38 @@ class BrandTile extends StatelessWidget {
                         Image.asset('assets/images/placeholder.png')),
               ),
               const Gap(20),
-              Text(
-                brand,
-                style: theme.appTextStyles.body1,
-              ),
-              const Spacer(),
-              Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: theme.appColors.surface3,
-                  // border: Border.all(color: theme.appColors.accent, width: 1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Text('${references.length}',
-                      style: theme.appTextStyles.body1.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: theme.appColors.onSurfacePrimary,
-                          fontSize: 13)),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        brand,
+                        style: context.responsive(
+                          textTheme.bodySmall,
+                          xl: textTheme.bodyLarge,
+                        ),
+                      ),
+                    ),
+                    const Gap(10),
+                    Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: colorScheme.surfaceDim,
+                        // border: Border.all(color: theme.appColors.accent, width: 1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${references.length}',
+                          style: textTheme.labelMedium!.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               )
             ],
@@ -89,10 +113,12 @@ class BrandTile extends StatelessWidget {
               title: GridView.count(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  crossAxisCount: 3,
-                  childAspectRatio: 3,
+                  crossAxisCount: context.responsive(2, xl: 3),
+                  childAspectRatio: context.responsive(4, xl: 3),
+                  crossAxisSpacing: 3,
+                  mainAxisSpacing: 1,
                   children: _buildReferenceTexts()),
-              tileColor: theme.appColors.onAccent,
+              tileColor: colorScheme.surface,
             ),
           ]),
     );

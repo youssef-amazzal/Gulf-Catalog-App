@@ -5,7 +5,8 @@ import 'package:gulf_catalog_app/common/widgets/labeled_widget.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 
 import 'package:gulf_catalog_app/common/models/my_group_button_options.dart';
-import 'package:gulf_catalog_app/features/catalog/presentation/bloc/filter/filter_cubit.dart';
+import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
+import 'package:gulf_catalog_app/features/catalog/catalog.dart';
 
 class StatusFilter extends StatelessWidget {
   const StatusFilter({
@@ -18,49 +19,58 @@ class StatusFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     GroupButtonController controller = GroupButtonController();
     controller.selectIndex(0);
 
     return LabeledWidget(
-      label: "PRODUCT STATUS",
-      child: BlocListener<FilterCubit, FilterState>(
+      label: "product_status_label",
+      child: BlocListener<CatalogBloc, CatalogState>(
         listener: (context, state) {
-          if (state is FilteredState) {
-            final status = state.availability;
+          if (state is CatalogInitial || state is CatalogResetState) {
             controller.selectIndex(
-                options.indexWhere((option) => option.status == status));
+              options.indexWhere((option) => option.status == Availability.all),
+            );
           }
         },
         child: GroupButton<MyGroupButtonOptions>(
           controller: controller,
+          options: const GroupButtonOptions(
+            spacing: 5,
+            runSpacing: 5,
+          ),
           buttons: options,
           onSelected: (value, index, isSelected) {
-            context.read<FilterCubit>().filter((currentState, emit) {
-              final newState = currentState.copyWith(
-                availability: value.status,
-              );
-              emit(newState);
-            });
+            context.read<CatalogBloc>().filter(availability: value.status);
           },
           buttonBuilder: (isSelected, data, context) => Container(
             width: data.width,
             alignment: Alignment.center,
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(context.responsive(8, xl: 12)),
             decoration: BoxDecoration(
               color: isSelected
-                  ? theme.appColors.surface2
-                  : theme.appColors.surface1,
+                  ? colorScheme.primary.withOpacity(0.2)
+                  : colorScheme.surfaceDim,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                  color: isSelected
-                      ? theme.appColors.accent
-                      : theme.appColors.border,
-                  width: 2),
+              // border: Border.all(
+              //     color:
+              //         isSelected ? theme.appColors.accent : Colors.transparent,
+              //     width: 2),
             ),
             child: Text(
               data.label,
-              style: theme.appTextStyles.body1.copyWith(
-                fontSize: 13,
+              style: context.responsive(
+                textTheme.labelMedium!.copyWith(
+                  color: isSelected
+                      ? colorScheme.primary
+                      : colorScheme.onSurfaceVariant,
+                ),
+                xl: textTheme.labelLarge!.copyWith(
+                  color: isSelected
+                      ? colorScheme.primary
+                      : colorScheme.onSurfaceVariant,
+                ),
               ),
             ),
           ),

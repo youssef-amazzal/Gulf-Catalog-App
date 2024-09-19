@@ -1,4 +1,4 @@
-import 'package:gulf_catalog_app/features/catalog/presentation/bloc/filter/filter_cubit.dart';
+import 'package:gulf_catalog_app/features/catalog/catalog.dart';
 
 class MyGroupButtonOptions {
   final String label;

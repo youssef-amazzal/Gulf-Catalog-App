@@ -66,7 +66,7 @@ class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
             ref,
             mfr:manufacturers(id, name, logo)
           ),
-          vehicles(id, name, kw, hp, engine, begin_year_month, end_year_month)
+          vehicles(id, name, kw, hp, capacity_cc, engine, begin_year_month, end_year_month)
         ''').eq('id', id);
 
       // print(data[0]['cross_refs']);

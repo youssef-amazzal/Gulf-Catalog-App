@@ -74,7 +74,7 @@ class _MySearchBarState extends State<MySearchBar> {
                 bottomRight: Radius.circular(14),
               ),
               fillColor: theme.appColors.border,
-              icon: AppVectors.home,
+              icon: AppVectors.solidHome,
               iconColor: theme.appColors.onSurfaceSecondary2,
             ),
           ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const darkAccent = Color(0xFFFA3A54);
-  static const lightAccent = Color(0xFFFA3A54);
+  static const lightAccent = Color(0xFFFC2340);
 
   static const black = Color(0xff0d171a);
   static const dark4 = Color(0xff111e22);

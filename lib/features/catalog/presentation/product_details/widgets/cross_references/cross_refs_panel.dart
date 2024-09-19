@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import "package:collection/collection.dart";
+import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/cross_ref.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/oe_ref.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/i18n/catalog.i18n.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/panel.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/panel_search_bar.dart';
 import 'brand_tile.dart';
@@ -54,7 +56,7 @@ class _CrossRefsPanelState extends State<CrossRefsPanel> {
   @override
   Widget build(BuildContext context) {
     return Panel(
-        title: 'Cross References',
+        title: 'cross_references'.i18n,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -62,9 +64,9 @@ class _CrossRefsPanelState extends State<CrossRefsPanel> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Expanded(
-                    child: PanelSearchBar(
-                        hintText: "Search reference, oem...",
-                        onChanged: _search))
+                  child: PanelSearchBar(
+                      hintText: "search_hint".i18n, onChanged: _search),
+                )
               ],
             ),
             Expanded(
@@ -94,19 +96,38 @@ class _CrossRefsPanelState extends State<CrossRefsPanel> {
           value?.toLowerCase().replaceAll(RegExp(r'[^\d\w]'), '') ?? '';
 
       // Create a deep copy of the data list
-      filterdData = List.from(data.map((e) {
-        var copiedElement = e.copyWith(
-          references: List.from(e.references),
-        );
+      filterdData = List.from(
+        data.map(
+          (e) {
+            var copiedElement = e.copyWith(
+              references: List.from(e.references),
+            );
 
-        copiedElement.references = copiedElement.references
-            .where((element) => element
+            if (normalizedValue.isEmpty) {
+              return copiedElement;
+            }
+
+            // search by brand/mfr name
+            if (e.brand
                 .toLowerCase()
                 .replaceAll(RegExp(r'[^\d\w]'), '')
-                .contains(normalizedValue.toLowerCase()))
-            .toList();
-        return copiedElement;
-      }).toList());
+                .contains(normalizedValue.toLowerCase())) {
+              return copiedElement;
+            }
+
+            // // search by reference
+            copiedElement.references = copiedElement.references
+                .where(
+                  (element) => element
+                      .toLowerCase()
+                      .replaceAll(RegExp(r'[^\d\w]'), '')
+                      .contains(normalizedValue.toLowerCase()),
+                )
+                .toList();
+            return copiedElement;
+          },
+        ).toList(),
+      );
 
       filterdData = filterdData
           .where((element) => element.references.isNotEmpty)

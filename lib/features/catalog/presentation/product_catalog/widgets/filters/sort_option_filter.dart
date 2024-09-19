@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gulf_catalog_app/common/widgets/drop_down.dart';
 import 'package:gulf_catalog_app/common/widgets/labeled_widget.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
-import 'package:gulf_catalog_app/features/catalog/presentation/bloc/filter/filter_cubit.dart';
+import 'package:gulf_catalog_app/features/catalog/catalog.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/i18n/catalog.i18n.dart';
 
 class SortOptionFilter extends StatelessWidget {
   const SortOptionFilter({
@@ -13,33 +14,44 @@ class SortOptionFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     final dropDownController = DropDownController<SortOption>();
 
     return LabeledWidget(
-      label: "SORT BY",
-      child: BlocListener<FilterCubit, FilterState>(
+      label: "sort_by_label",
+      child: BlocListener<CatalogBloc, CatalogState>(
         listener: (context, state) {
-          if (state is FilteredState && state.sortBy == null) {
+          if (state is CatalogInitial || state is CatalogResetState) {
             dropDownController.setSelectedValue(null);
           }
         },
         child: DropDown<SortOption>(
           controller: dropDownController,
-          hintText: 'Sort By',
+          hintText: 'sort_by_hint'.i18n,
           hintIcon: Icons.sort,
           items: _getSortOptions(),
           onChanged: (selected) {
-            context.read<FilterCubit>().filter((currentState, emit) {
-              final newState = currentState.copyWith(sortBy: selected!.value);
-              emit(newState);
-            });
+            context.read<CatalogBloc>().filter(sortBy: selected?.value);
           },
           itemBuilder: (item) => DropdownMenuItem(
             value: item,
-            child: Text(item.label,
-                style: theme.appTextStyles.body1
-                    .copyWith(fontSize: 13, fontWeight: FontWeight.normal),
-                overflow: TextOverflow.ellipsis),
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: '${item.type.i18n}: ',
+                    style: textTheme.labelMedium!.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  TextSpan(
+                    text: item.variant.i18n,
+                    style: textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -48,29 +60,16 @@ class SortOptionFilter extends StatelessWidget {
 
   List<SortOption> _getSortOptions() {
     return [
-      SortOption(value: SortBy.alphaAsc, label: 'Alphabetically: A-Z'),
-      SortOption(value: SortBy.alphaDesc, label: 'Alphabetically: Z-A'),
-      SortOption(value: SortBy.stockAsc, label: 'Quantity: Low - High'),
-      SortOption(value: SortBy.stockDesc, label: 'Quantity: High - Low'),
-      SortOption(value: SortBy.priceAsc, label: 'Price: Low - High'),
-      SortOption(value: SortBy.priceDesc, label: 'Price: High - Low'),
-      SortOption(value: SortBy.updatedAsc, label: 'Updated: Old - New'),
-      SortOption(value: SortBy.updatedDesc, label: 'Updated: New - Old'),
+      (value: SortBy.alphaAsc, type: 'alphabetically', variant: 'a_z'),
+      (value: SortBy.alphaDesc, type: 'alphabetically', variant: 'z_a'),
+      (value: SortBy.stockAsc, type: 'quantity', variant: 'low_high'),
+      (value: SortBy.stockDesc, type: 'quantity', variant: 'high_low'),
+      (value: SortBy.priceAsc, type: 'price', variant: 'low_high'),
+      (value: SortBy.priceDesc, type: 'price', variant: 'high_low'),
+      (value: SortBy.updatedAsc, type: 'updated', variant: 'old_new'),
+      (value: SortBy.updatedDesc, type: 'updated', variant: 'new_old'),
     ];
-    // return [
-    //   'Alphabetically: A-Z',
-    //   'Alphabetically: Z-A',
-    //   'Quantity: High - Low',
-    //   'Quantity: Low - High',
-    //   'Price: High - Low',
-    //   'Price: Low - High'
-    // ];
   }
 }
 
-class SortOption {
-  final SortBy value;
-  final String label;
-
-  SortOption({required this.value, required this.label});
-}
+typedef SortOption = ({SortBy value, String type, String variant});

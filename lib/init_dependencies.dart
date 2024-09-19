@@ -1,5 +1,5 @@
 import 'package:gulf_catalog_app/features/catalog/domain/usecases/fetch_product_details.dart';
-import 'package:gulf_catalog_app/features/catalog/presentation/bloc/filter/filter_cubit.dart';
+import 'package:gulf_catalog_app/features/catalog/domain/usecases/filter_products.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/bloc/details/details_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -14,7 +14,6 @@ Future<void> initDependencies() async {
   _initCore();
   _initAuth();
   _initCatalog();
-  _initFilters();
   final supabase = await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
     anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
@@ -74,11 +73,15 @@ void _initCatalog() {
       () => FetchProducts(repository: serviceLocator()),
     )
     ..registerFactory(
+      () => FilterProducts(),
+    )
+    ..registerFactory(
       () => FetchProductDetails(repository: serviceLocator()),
     )
     ..registerLazySingleton(
       () => CatalogBloc(
         fetchProducts: serviceLocator(),
+        filterProducts: serviceLocator(),
       ),
     )
     ..registerLazySingleton(
@@ -86,8 +89,4 @@ void _initCatalog() {
         fetchProductDetails: serviceLocator(),
       ),
     );
-}
-
-void _initFilters() {
-  serviceLocator.registerLazySingleton(() => FilterCubit());
 }

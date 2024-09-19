@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
+import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
 
 class ReferenceText extends StatelessWidget {
   final String reference;
@@ -11,11 +12,11 @@ class ReferenceText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    return SizedBox(
-      height: 10,
-      child: Text('- $reference',
-          style: theme.appTextStyles.body1
-              .copyWith(fontSize: 14.5, fontWeight: FontWeight.w400)),
+    final textTheme = theme.textTheme;
+
+    return Text(
+      '- $reference',
+      style: context.responsive(textTheme.bodyLarge, xl: textTheme.bodyMedium),
     );
   }
 }

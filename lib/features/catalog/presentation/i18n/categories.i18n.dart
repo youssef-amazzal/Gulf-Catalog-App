@@ -1,7 +1,27 @@
 import 'package:i18n_extension/i18n_extension.dart';
 
-extension Localization on Object {
-  static const _t = ConstTranslations('en_us', {
+final categoriesTranslation = Translations.byId<String>(
+  'en_us',
+  {
+    'Engine Maintenance': {
+      'en': 'Engine Maintenance',
+      'fr': 'Entretien Moteur'
+    },
+    'Timing and Drive': {
+      'en': 'Timing and Drive',
+      'fr': 'Distribution et Transmission'
+    },
+    'Clutch System': {'en': 'Clutch System', 'fr': 'Système d\'Embrayage'},
+    'Suspension System': {
+      'en': 'Suspension System',
+      'fr': 'Système de Suspension'
+    },
+    'Cooling System': {
+      'en': 'Cooling System',
+      'fr': 'Système de Refroidissement'
+    },
+    'Battery': {'en': 'Battery', 'fr': 'Batterie'},
+    'Braking System': {'en': 'Braking System', 'fr': 'Système de Freinage'},
     'additive': {'en': 'Additives', 'fr': 'Additifs'},
     'amortisseur': {'en': 'Shock Absorbers', 'fr': 'Amortisseurs'},
     'battery': {'en': 'Battery', 'fr': 'Batterie'},
@@ -27,7 +47,7 @@ extension Localization on Object {
       'en': 'Desiccant Filters',
       'fr': 'Filtres Dessiccateurs'
     },
-    'filter_habitacle': {'en': 'Cabin Filters', 'fr': 'Filtres d\'Habitacle'},
+    'filter_habitacle': {'en': 'Cabin Filters', 'fr': 'Filtres Habitacle'},
     'filter_huile': {'en': 'Oil Filters', 'fr': 'Filtres à Huile'},
     'filter_hydraulique': {
       'en': 'Hydraulic Filters',
@@ -49,8 +69,7 @@ extension Localization on Object {
     'plaquette': {'en': 'Brake Pads', 'fr': 'Plaquettes de Frein'},
     'pompe_eau': {'en': 'Water Pumps', 'fr': 'Pompes à Eau'},
     'radiateur': {'en': 'Radiators', 'fr': 'Radiateurs'},
-    'roulement_roue': {'en': 'Wheel Bearings', 'fr': 'Roulements de Roue'}
-  });
-
-  String get i18n => localize(this, _t);
-}
+    'roulement_roue': {'en': 'Wheel Bearings', 'fr': 'Roulements de Roue'},
+    'lubrifiant': {'en': 'Lubricants', 'fr': 'Lubrifiants'},
+  },
+);

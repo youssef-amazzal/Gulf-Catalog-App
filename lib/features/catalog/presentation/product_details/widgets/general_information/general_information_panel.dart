@@ -4,9 +4,12 @@ import 'package:gap/gap.dart';
 import 'package:gulf_catalog_app/common/widgets/svg_icon.dart';
 import 'package:gulf_catalog_app/core/configs/assets/app_vectors.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
+import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/product.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/section.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/i18n/catalog.i18n.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/panel.dart';
+import 'package:path/path.dart';
 
 class GeneralInformationPanel extends StatelessWidget {
   final Product product;
@@ -15,8 +18,11 @@ class GeneralInformationPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Panel(
-      title: 'General Information',
+      title: 'general_information'.i18n,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,49 +30,68 @@ class GeneralInformationPanel extends StatelessWidget {
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-              child: SizedBox(
-                child: Wrap(
-                  runSpacing: 35,
+              child: LayoutBuilder(builder: (context, constrainsts) {
+                return Wrap(
+                  runSpacing: 18,
                   direction: Axis.vertical,
-                  children: _buildDetails(product.details ?? [], theme),
-                ),
-              ),
+                  children: _buildDetails(
+                    context,
+                    product.details ?? [],
+                    theme,
+                    constrainsts.maxWidth / 2 - (18 / 2),
+                  ),
+                );
+              }),
             ),
           ),
           Divider(
             height: 0,
-            thickness: 2,
-            color: theme.appColors.border,
+            thickness: 0.5,
+            color: colorScheme.outline,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
-            child: Row(
-              children: [
-                SvgIcon(
-                  icon: AppVectors.package,
-                  color: theme.appColors.onSurfaceSecondary1,
-                  height: 25,
-                ),
-                const Gap(10),
-                Text(
-                  'Stocked Product : ',
-                  style: theme.appTextStyles.bodyAlt1.copyWith(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+          Container(
+            color: colorScheme.surface,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: context.responsive(10, xl: 15),
+              ),
+              child: Row(
+                children: [
+                  SvgIcon(
+                    icon: AppVectors.solidPackage,
+                    color: colorScheme.onSurfaceVariant,
+                    height: context.responsive(18, xl: 22),
                   ),
-                ),
-                Text(
-                  '${product.quantity}',
-                  style: theme.appTextStyles.body1.copyWith(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
+                  const Gap(10),
+                  Text(
+                    '${'stocked_product'.i18n} : ',
+                    style: context.responsive(
+                      textTheme.labelLarge!.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      xl: textTheme.labelLarge!.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
                   ),
-                ),
-                const Spacer(),
-                Row(
-                  children: _buildPrices(product: product, theme: theme),
-                )
-              ],
+                  Text(
+                    '${product.quantity}',
+                    style: context.responsive(
+                      textTheme.bodyLarge,
+                      xl: textTheme.bodyLarge,
+                    ),
+                  ),
+                  const Spacer(),
+                  Row(
+                    children: _buildPrices(
+                      context: context,
+                      product: product,
+                      theme: theme,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ],
@@ -74,33 +99,45 @@ class GeneralInformationPanel extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildDetails(List<Section> sections, ThemeData theme) {
+  List<Widget> _buildDetails(
+    BuildContext context,
+    List<Section> sections,
+    ThemeData theme,
+    double width,
+  ) {
+    final textTheme = theme.textTheme;
     return sections
         .map((section) {
           return <Widget>[
             Text(
               section.title,
-              style: theme.appTextStyles.h1
-                  .copyWith(fontSize: 17, fontWeight: FontWeight.w800),
+              style: context.responsive(
+                textTheme.titleSmall,
+                xl: textTheme.titleLarge,
+              ),
             ),
             ...generateKeyValues(section.details)?.map((e) => e) ?? [],
-            const Gap(30),
+            const Gap(10),
           ];
         })
         .toList()
         .flattened
-        .map((widget) => SizedBox(width: 300, child: widget))
+        .map((widget) => SizedBox(width: width, child: widget))
         .toList();
   }
 
-  List<Widget> _buildPrices(
-      {required Product product, required ThemeData theme}) {
-    List<Widget> widgets = [];
+  List<Widget> _buildPrices({
+    required BuildContext context,
+    required Product product,
+    required ThemeData theme,
+  }) {
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+    final List<Widget> widgets = [];
     widgets.add(
       Text(
         '${product.unitPrice!.price} Dh',
-        style:
-            theme.appTextStyles.body1.copyWith(fontWeight: FontWeight.normal),
+        style: context.responsive(textTheme.bodyLarge, xl: textTheme.bodyLarge),
       ),
     );
 
@@ -109,15 +146,35 @@ class GeneralInformationPanel extends StatelessWidget {
       widgets.add(
         Text(
           '/',
-          style: theme.appTextStyles.bodyAlt1,
+          style: context.responsive(
+            textTheme.bodyLarge!.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+            xl: textTheme.bodyLarge!.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
         ),
       );
       widgets.add(const Gap(10));
       widgets.add(
-        Text(
-          '${price.price} Dh (x${price.quantity})',
-          style:
-              theme.appTextStyles.body1.copyWith(fontWeight: FontWeight.normal),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: '${price.price} Dh ',
+                style: context.responsive(textTheme.bodyLarge,
+                    xl: textTheme.bodyLarge),
+              ),
+              TextSpan(
+                text: '(x${price.quantity})',
+                style: context.responsive(
+                  textTheme.bodyLarge!.copyWith(color: colorScheme.primary),
+                  xl: textTheme.bodyLarge!.copyWith(color: colorScheme.primary),
+                ),
+              )
+            ],
+          ),
         ),
       );
     }
@@ -136,11 +193,14 @@ List<Widget>? generateKeyValues(Map<String, dynamic>? details) {
 class _KeyValueRow extends StatelessWidget {
   final String title;
   final dynamic value;
-  const _KeyValueRow({super.key, required this.title, required this.value});
+  const _KeyValueRow({required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,19 +208,21 @@ class _KeyValueRow extends StatelessWidget {
         Flexible(
           child: Text(
             title,
-            style: theme.appTextStyles.body1.copyWith(
-              fontSize: 13.5,
-              fontWeight: FontWeight.w500,
+            style: context.responsive(
+              textTheme.bodySmall,
+              xl: textTheme.bodyLarge,
             ),
           ),
         ),
-        const Gap(5),
         Text(
           '$value',
-          style: theme.appTextStyles.bodyAlt1.copyWith(
-            fontSize: 13.5,
-            color: theme.appColors.onSurfaceSecondary2,
-            fontWeight: FontWeight.w400,
+          style: context.responsive(
+            textTheme.bodySmall!.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+            xl: textTheme.bodyLarge!.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
         ),
       ],

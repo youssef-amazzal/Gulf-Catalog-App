@@ -6,9 +6,10 @@ import 'package:go_router/go_router.dart';
 import 'package:gulf_catalog_app/common/widgets/svg_icon.dart';
 import 'package:gulf_catalog_app/core/configs/assets/app_vectors.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
+import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/product.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/bloc/details/details_bloc.dart';
-import 'package:gulf_catalog_app/features/catalog/presentation/i18n/categories.i18n.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/i18n/catalog.i18n.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -20,7 +21,9 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = context.theme;
+    final theme = context.theme;
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
     return GestureDetector(
       onTap: () {
@@ -31,10 +34,10 @@ class ProductCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: theme.appColors.surface1,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
         ),
-        padding: const EdgeInsets.all(15),
+        padding: EdgeInsets.all(context.responsive(10, xl: 15)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Expanded(
             child: Stack(
@@ -42,36 +45,50 @@ class ProductCard extends StatelessWidget {
               children: [_CardImage(product: product)],
             ),
           ),
-          const Gap(10),
+          Gap(context.responsive(5, xl: 10)),
           _CardTitle(product: product),
           _CardSubtitle(
             product: product,
           ),
-          const Gap(10),
-          Row(children: [
-            SvgIcon(
-              icon: AppVectors.package,
-              height: 15,
-              color: theme.appColors.onSurfaceSecondary1,
-            ),
-            const Gap(5),
-            Text(
-              'Stocked Product: ',
-              style: theme.appTextStyles.bodyAlt1
-                  .copyWith(fontSize: 13.5, fontWeight: FontWeight.w600),
-            ),
-            Text(
-              '${product.quantity} in stock',
-              style: theme.appTextStyles.bodyAlt1.copyWith(
-                  fontSize: 13.5,
-                  color: theme.appColors.onSurfacePrimary,
-                  fontWeight: FontWeight.w600),
-            ),
-          ]),
+          Gap(context.responsive(5, xl: 10)),
+          Row(
+            children: [
+              SvgIcon(
+                icon: AppVectors.solidPackage,
+                height: context.responsive(13, xl: 17),
+                color: colorScheme.onSurfaceVariant,
+              ),
+              const Gap(5),
+              Flexible(
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '${'stocked_product'.i18n}: ',
+                        style: context.responsive(
+                          textTheme.labelSmall!
+                              .copyWith(color: colorScheme.onSurfaceVariant),
+                          xl: textTheme.labelLarge!
+                              .copyWith(color: colorScheme.onSurfaceVariant),
+                        ),
+                      ),
+                      TextSpan(
+                        text: '${product.quantity} ${'product_in_stock'.i18n}',
+                        style: context.responsive(
+                          textTheme.labelSmall!,
+                          xl: textTheme.labelLarge!,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
           Divider(
-            color: theme.appColors.border,
-            thickness: 2,
-            height: 30,
+            color: colorScheme.outline.withOpacity(0.5),
+            thickness: 1,
+            height: context.responsive(20, xl: 30),
           ),
           Row(
             children: [
@@ -80,17 +97,23 @@ class ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Unit Price',
+                      'unit_price'.i18n,
                       overflow: TextOverflow.ellipsis,
-                      style: theme.appTextStyles.bodyAlt1
-                          .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+                      style: context.responsive(
+                        textTheme.labelSmall!
+                            .copyWith(color: colorScheme.onSurfaceVariant),
+                        xl: textTheme.labelLarge!
+                            .copyWith(color: colorScheme.onSurfaceVariant),
+                      ),
                     ),
-                    const Gap(10),
+                    Gap(context.responsive(5, xl: 10)),
                     Text(
                       '${product.unitPrice?.price ?? -1} Dh',
                       overflow: TextOverflow.ellipsis,
-                      style: theme.appTextStyles.body1
-                          .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+                      style: context.responsive(
+                        textTheme.labelSmall,
+                        xl: textTheme.labelLarge,
+                      ),
                     ),
                   ],
                 ),
@@ -100,17 +123,25 @@ class ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Pack Price',
+                      'pack_price'.i18n,
                       overflow: TextOverflow.ellipsis,
-                      style: theme.appTextStyles.bodyAlt1
-                          .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+                      style: context.responsive(
+                        textTheme.labelSmall!
+                            .copyWith(color: colorScheme.onSurfaceVariant),
+                        xl: textTheme.labelLarge!
+                            .copyWith(color: colorScheme.onSurfaceVariant),
+                      ),
                     ),
-                    const Gap(10),
+                    Gap(context.responsive(5, xl: 10)),
                     Text(
-                      '${product.packPrices.isNotEmpty ? product.packPrices.first.price : '-'} Dh',
+                      product.packPrices.isNotEmpty
+                          ? '${product.packPrices.first.price} Dh'
+                          : '-',
                       overflow: TextOverflow.ellipsis,
-                      style: theme.appTextStyles.body1
-                          .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+                      style: context.responsive(
+                        textTheme.labelSmall,
+                        xl: textTheme.labelLarge,
+                      ),
                     ),
                   ],
                 ),
@@ -126,18 +157,22 @@ class ProductCard extends StatelessWidget {
 class _CardSubtitle extends StatelessWidget {
   final Product product;
   const _CardSubtitle({
-    super.key,
     required this.product,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Text(
       product.category?.name.i18n ?? '',
       overflow: TextOverflow.ellipsis,
-      style: theme.appTextStyles.bodyAlt1
-          .copyWith(fontSize: 12.5, fontWeight: FontWeight.w600),
+      style: context.responsive(
+          textTheme.labelSmall!.copyWith(color: colorScheme.onSurfaceVariant),
+          xl: textTheme.labelMedium!
+              .copyWith(color: colorScheme.onSurfaceVariant)),
     );
   }
 }
@@ -146,23 +181,28 @@ class _CardTitle extends StatelessWidget {
   final Product product;
 
   const _CardTitle({
-    super.key,
     required this.product,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final textTheme = theme.textTheme;
+
+    String title = product.reference ?? '';
+
+    if (product.category?.name == 'additive') {
+      title = product.details?[0].details?['typeAbrv'] ?? title;
+    }
     return Text(
-      product.reference ?? "",
-      style: theme.appTextStyles.h1.copyWith(fontSize: 15),
+      title,
+      style: context.responsive(textTheme.labelLarge, xl: textTheme.titleLarge),
     );
   }
 }
 
 class _CardImage extends StatelessWidget {
   const _CardImage({
-    super.key,
     required this.product,
   });
 

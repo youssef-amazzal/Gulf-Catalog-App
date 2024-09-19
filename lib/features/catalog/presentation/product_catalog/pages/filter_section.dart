@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 import 'package:gulf_catalog_app/features/catalog/catalog.dart';
-import 'package:gulf_catalog_app/features/catalog/presentation/bloc/filter/filter_cubit.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/category_filter.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/sort_option_filter.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/status_filter.dart';
@@ -37,7 +36,7 @@ class FilterSection extends StatelessWidget {
               child: BlocBuilder<CatalogBloc, CatalogState>(
                 builder: (context, state) {
                   int total = 0;
-                  if (state is CatalogSuccessfulFetching) {
+                  if (state is CatalogSuccess) {
                     total = state.products.length;
                   }
                   return RichText(
@@ -135,11 +134,7 @@ class FilterPanel extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              context
-                  .read<FilterCubit>()
-                  .filter((state, emit) => emit(const FilteredState()));
-            },
+            onTap: () => context.read<CatalogBloc>().add(CatalogReset()),
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 20),
               color: theme.appColors.surface2,

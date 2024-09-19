@@ -26,7 +26,8 @@
         ".dart_tool": true,
         "test": true,
         ".metadata": true,
-        "gulf_catalog_app.iml": true
+        "gulf_catalog_app.iml": true,
+        "android": true
     },
     "hide-files.files": [
         ".idea",
@@ -45,7 +46,8 @@
         ".dart_tool",
         "test",
         ".metadata",
-        "gulf_catalog_app.iml"
+        "gulf_catalog_app.iml",
+        "android"
     ],
     "svg.preview.background": "dark-transparent"
 }
