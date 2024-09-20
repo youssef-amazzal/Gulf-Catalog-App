@@ -8,13 +8,13 @@ import 'package:gulf_catalog_app/common/models/my_group_button_options.dart';
 import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
 import 'package:gulf_catalog_app/features/catalog/catalog.dart';
 
-class StatusFilter extends StatelessWidget {
-  const StatusFilter({
+class LowRotationFilter extends StatelessWidget {
+  const LowRotationFilter({
     super.key,
     required this.options,
   });
 
-  final List<StatusButtonOptions> options;
+  final List<PlainButtonOptions> options;
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +22,16 @@ class StatusFilter extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
     GroupButtonController controller = GroupButtonController();
-    controller.selectIndex(0);
 
     return LabeledWidget(
-      label: "product_status_label",
+      label: "low_rotation_label",
       child: BlocListener<CatalogBloc, CatalogState>(
         listener: (context, state) {
           if (state is CatalogInitial || state is CatalogResetState) {
-            controller.selectIndex(
-              options.indexWhere((option) => option.status == Availability.all),
-            );
+            controller.unselectAll();
           }
         },
-        child: GroupButton<StatusButtonOptions>(
+        child: GroupButton<PlainButtonOptions>(
           controller: controller,
           options: const GroupButtonOptions(
             spacing: 5,
@@ -42,7 +39,7 @@ class StatusFilter extends StatelessWidget {
           ),
           buttons: options,
           onSelected: (value, index, isSelected) {
-            context.read<CatalogBloc>().filter(availability: value.status);
+            context.read<CatalogBloc>().filter(isLowRotated: true);
           },
           buttonBuilder: (isSelected, data, context) => Container(
             width: data.width,

@@ -12,7 +12,6 @@
         "**/.factorypath": true,
         ".idea": true,
         ".vscode": true,
-        "ios": true,
         "macos": true,
         "web": true,
         "windows": true,
@@ -26,13 +25,11 @@
         ".dart_tool": true,
         "test": true,
         ".metadata": true,
-        "gulf_catalog_app.iml": true,
-        "android": true
+        "gulf_catalog_app.iml": true
     },
     "hide-files.files": [
         ".idea",
         ".vscode",
-        "ios",
         "macos",
         "web",
         "windows",
@@ -46,8 +43,7 @@
         ".dart_tool",
         "test",
         ".metadata",
-        "gulf_catalog_app.iml",
-        "android"
+        "gulf_catalog_app.iml"
     ],
     "svg.preview.background": "dark-transparent"
 }

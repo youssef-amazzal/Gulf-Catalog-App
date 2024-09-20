@@ -28,12 +28,14 @@ final class CatalogFilterEvent extends CatalogEvent {
   final Availability availability;
   final String? category;
   final SortBy? sortBy;
+  final bool isLowRotated;
 
   const CatalogFilterEvent({
     required this.products,
     this.category,
     this.availability = Availability.all,
     this.sortBy,
+    this.isLowRotated = false,
   });
 
   // Copy with
@@ -42,17 +44,20 @@ final class CatalogFilterEvent extends CatalogEvent {
     Availability? availability,
     String? category,
     SortBy? sortBy,
+    bool? isLowRotated,
   }) {
     return CatalogFilterEvent(
       products: products ?? this.products,
       availability: availability ?? this.availability,
       category: category ?? this.category,
       sortBy: sortBy ?? this.sortBy,
+      isLowRotated: isLowRotated ?? this.isLowRotated,
     );
   }
 
   @override
-  List<Object?> get props => [products, category, availability, sortBy];
+  List<Object?> get props =>
+      [products, category, availability, sortBy, isLowRotated];
 }
 
 final class CatalogReset extends CatalogEvent {}

@@ -39,6 +39,6 @@ typedef BreakPointOption<T> = ({int width, T item});
 class BreakPoints {
   static const sm = 640;
   static const md = 768;
-  static const lg = 1024;
+  static const lg = 900;
   static const xl = 1280;
 }

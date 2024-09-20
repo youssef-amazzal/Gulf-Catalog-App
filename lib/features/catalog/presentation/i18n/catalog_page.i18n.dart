@@ -11,6 +11,7 @@ final catalogPageTranslation = Translations.byId<String>(
     // Filters
     'product_status_label': {'en': 'PRODUCT STATUS', 'fr': 'STATUS DE PRODUIT'},
     'product_status_hint': {'en': 'Product Status', 'fr': 'Status de Produit'},
+    'low_rotation_label': {'en': 'LOW ROTATION', 'fr': 'FAIBLE ROTATION'},
     'category_label': {'en': 'CATEGORY', 'fr': 'CATÉGORIE'},
     'category_hint': {'en': 'All Categories', 'fr': 'Toutes les Catégories'},
     'sort_by_label': {'en': 'SORT BY', 'fr': 'TRIER PAR'},
@@ -29,6 +30,7 @@ final catalogPageTranslation = Translations.byId<String>(
     'high_low': {'en': 'High - Low', 'fr': 'Élevé - Faible'},
     'old_new': {'en': 'Old - New', 'fr': 'Ancien - Nouveau'},
     'new_old': {'en': 'New - Old', 'fr': 'Nouveau - Ancien'},
+    'low_rotation': {'en': 'Low Rotation', 'fr': 'Faible Rotation'},
     // Card
     'stocked_product': {'en': 'Stock', 'fr': 'Stock'},
     'product_in_stock': {'en': 'in stock', 'fr': 'en stock'},

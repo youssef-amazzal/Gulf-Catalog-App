@@ -52,6 +52,7 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
         availability: event.availability,
         category: event.category,
         sortBy: event.sortBy,
+        isLowRotated: event.isLowRotated,
       ),
     );
 
@@ -68,19 +69,25 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
     add(CatalogFilterEvent(products: _products!));
   }
 
-  void filter({Availability? availability, String? category, SortBy? sortBy}) {
+  void filter(
+      {Availability? availability,
+      String? category,
+      SortBy? sortBy,
+      bool? isLowRotated}) {
     if (state is CatalogSuccess) {
       final event = _previousFilterEvent?.copyWith(
             products: _products,
             category: category,
             availability: availability,
             sortBy: sortBy,
+            isLowRotated: isLowRotated,
           ) ??
           CatalogFilterEvent(
             products: _products!,
             category: category,
             availability: availability ?? Availability.all,
             sortBy: sortBy,
+            isLowRotated: isLowRotated ?? false,
           );
 
       add(event);

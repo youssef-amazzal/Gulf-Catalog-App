@@ -10,6 +10,7 @@ import 'package:gulf_catalog_app/features/catalog/presentation/bloc/catalog/cata
 import 'package:gulf_catalog_app/features/catalog/presentation/i18n/catalog.i18n.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/new/widgets/search_bar.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/category_filter.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/low_rotation_filter.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/sort_option_filter.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/status_filter.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/product_card.dart';
@@ -140,20 +141,29 @@ class FilterPanel extends StatelessWidget {
                           Gap(context.responsive(10, xl: 20)),
                           StatusFilter(
                             options: [
-                              MyGroupButtonOptions(
+                              (
                                 label: "all".i18n,
                                 width: constraints.maxWidth,
                                 status: Availability.all,
                               ),
-                              MyGroupButtonOptions(
+                              (
                                 label: "in_stock".i18n,
                                 width: (constraints.maxWidth - 5) / 2,
                                 status: Availability.inStock,
                               ),
-                              MyGroupButtonOptions(
+                              (
                                 label: "out_of_stock".i18n,
                                 width: (constraints.maxWidth - 5) / 2,
                                 status: Availability.outOfStock,
+                              ),
+                            ],
+                          ),
+                          Gap(context.responsive(10, xl: 20)),
+                          LowRotationFilter(
+                            options: [
+                              (
+                                label: "low_rotation".i18n,
+                                width: constraints.maxWidth,
                               ),
                             ],
                           ),

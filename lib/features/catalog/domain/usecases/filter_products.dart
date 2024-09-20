@@ -13,6 +13,7 @@ class FilterProducts implements Usecase<List<Product>, FilterParams> {
       products = _filterByAvailability(products, params.availability);
       products = _filterByCategory(products, params.category);
       products = _sortBy(products, params.sortBy);
+      products = _filterByLowRotation(products, params.isLowRotated);
 
       return right(products);
     } catch (error) {
@@ -75,11 +76,18 @@ class FilterProducts implements Usecase<List<Product>, FilterParams> {
         return products;
     }
   }
+
+  List<Product> _filterByLowRotation(
+      List<Product> products, bool? isLowRotated) {
+    if (isLowRotated == null || !isLowRotated) return products;
+    return products.where((p) => p.isLowRotated).toList();
+  }
 }
 
 typedef FilterParams = ({
   List<Product> products,
   Availability availability,
   String? category,
-  SortBy? sortBy
+  SortBy? sortBy,
+  bool? isLowRotated,
 });
