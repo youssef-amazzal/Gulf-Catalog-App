@@ -9,7 +9,6 @@ import 'package:gulf_catalog_app/features/catalog/domain/entities/product.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/section.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/i18n/catalog.i18n.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_details/widgets/panel.dart';
-import 'package:path/path.dart';
 
 class GeneralInformationPanel extends StatelessWidget {
   final Product product;

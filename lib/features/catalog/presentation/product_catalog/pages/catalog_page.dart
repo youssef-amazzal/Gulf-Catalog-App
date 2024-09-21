@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gulf_catalog_app/common/models/my_group_button_options.dart';
+import 'package:gulf_catalog_app/common/types/my_group_button_options.dart';
 import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 import 'package:gulf_catalog_app/core/configs/theme/new/app_theme.dart';
 import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/product.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/bloc/catalog/catalog_bloc.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/i18n/catalog.i18n.dart';
-import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/new/widgets/search_bar.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/search_bar.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/category_filter.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/low_rotation_filter.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/sort_option_filter.dart';

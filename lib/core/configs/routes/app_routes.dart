@@ -4,7 +4,6 @@ import 'package:gulf_catalog_app/core/configs/theme/new/app_theme.dart';
 import 'package:gulf_catalog_app/features/navigation/navigation.dart';
 import 'package:gulf_catalog_app/core/configs/assets/app_vectors.dart';
 import 'package:gulf_catalog_app/features/catalog/catalog.dart';
-import 'package:gulf_catalog_app/features/dashboard/presentation/dashboard.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -46,7 +45,7 @@ final GoRouter appRoutes = GoRouter(navigatorKey: _rootNavigatorKey, routes: [
           path: AppRoutes.categories.path,
           name: AppRoutes.categories.name,
           parentNavigatorKey: _shellNavigatorKey,
-          builder: (context, state) => const DashboardPage(),
+          builder: (context, state) => const Placeholder(),
         ),
       ]),
 ]);
