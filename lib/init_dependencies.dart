@@ -1,6 +1,7 @@
 import 'package:gulf_catalog_app/features/catalog/domain/usecases/fetch_product_details.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/usecases/filter_products.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/bloc/details/details_bloc.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/bloc/ui/FilterPanel/filter_panel_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
@@ -88,5 +89,8 @@ void _initCatalog() {
       () => DetailsBloc(
         fetchProductDetails: serviceLocator(),
       ),
+    )
+    ..registerLazySingleton(
+      () => FilterPanelCubit(),
     );
 }

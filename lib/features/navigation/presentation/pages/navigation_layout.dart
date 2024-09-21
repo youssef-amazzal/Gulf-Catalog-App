@@ -55,7 +55,7 @@ class HorizontalLayout extends StatelessWidget {
             ],
           ),
         ),
-        const Gap(40),
+        const Gap(20),
         Expanded(child: child),
       ],
     );

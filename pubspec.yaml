@@ -102,7 +102,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - assets/images/products/CF-112/
     - assets/svg/
     - assets/fonts/
     - .env

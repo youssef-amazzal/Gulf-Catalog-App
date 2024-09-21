@@ -7,6 +7,7 @@ import 'package:gulf_catalog_app/core/configs/theme/new/app_theme.dart';
 import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/product.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/bloc/catalog/catalog_bloc.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/bloc/ui/FilterPanel/filter_panel_cubit.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/i18n/catalog.i18n.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/search_bar.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/product_catalog/widgets/filters/category_filter.dart';
@@ -23,8 +24,6 @@ class CatalogPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
     final leftSectionWidth = context.responsive<double>(270, xl: 330);
 
     return Column(
@@ -34,7 +33,14 @@ class CatalogPage extends StatelessWidget {
         Expanded(
           child: Row(
             children: [
-              FilterPanel(width: leftSectionWidth),
+              BlocBuilder<FilterPanelCubit, FilterPanelState>(
+                builder: (context, state) {
+                  if (state is FilterPanelVisible) {
+                    return FilterPanel(width: leftSectionWidth);
+                  }
+                  return const SizedBox();
+                },
+              ),
               Gap(context.responsive(15, xl: 20)),
               const Expanded(
                 child: ResultsSection(),
@@ -77,13 +83,18 @@ class _ResultsSectionState extends State<ResultsSection> {
       builder: (context, catalogState) {
         if (catalogState is CatalogSuccess) {
           final products = catalogState.products;
-          return GridView.count(
-            childAspectRatio: 0.83,
-            padding: const EdgeInsets.all(0),
-            crossAxisCount: context.responsive(3, xl: 3),
-            crossAxisSpacing: context.responsive(10, xl: 15),
-            mainAxisSpacing: context.responsive(10, xl: 15),
-            children: _generateCards(products),
+          return BlocBuilder<FilterPanelCubit, FilterPanelState>(
+            builder: (context, state) {
+              final count = (state is FilterPanelVisible) ? 3 : 4;
+              return GridView.count(
+                childAspectRatio: 0.83,
+                padding: const EdgeInsets.all(0),
+                crossAxisCount: context.responsive(count, xl: count),
+                crossAxisSpacing: context.responsive(10, xl: 15),
+                mainAxisSpacing: context.responsive(10, xl: 15),
+                children: _generateCards(products),
+              );
+            },
           );
         } else {
           return Center(
@@ -290,17 +301,24 @@ class FilterPanelToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme;
     final colorScheme = theme.colorScheme;
-    return Container(
-        decoration: BoxDecoration(
-          color: colorScheme.primary,
-          borderRadius: MAppTheme.kRadius,
-        ),
-        child: IconButton(
-            onPressed: () {},
+    return BlocBuilder<FilterPanelCubit, FilterPanelState>(
+      builder: (context, state) {
+        return Container(
+          decoration: BoxDecoration(
+            color: colorScheme.primary,
+            borderRadius: MAppTheme.kRadius,
+          ),
+          child: IconButton(
+            onPressed: () =>
+                context.read<FilterPanelCubit>().toggleVisibility(),
             icon: Icon(
               Icons.filter_alt_outlined,
               color: colorScheme.onPrimary,
-            )));
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 

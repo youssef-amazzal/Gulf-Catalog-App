@@ -11,6 +11,7 @@ import 'package:gulf_catalog_app/common/cubits/app_user/app_user_cubit.dart';
 import 'package:gulf_catalog_app/core/configs/routes/app_routes.dart';
 import 'package:gulf_catalog_app/features/auth/auth.dart';
 import 'package:gulf_catalog_app/features/catalog/catalog.dart';
+import 'package:gulf_catalog_app/features/catalog/presentation/bloc/ui/FilterPanel/filter_panel_cubit.dart';
 import 'package:gulf_catalog_app/init_dependencies.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -57,6 +58,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
         BlocProvider(create: (_) => serviceLocator<CatalogBloc>()),
         BlocProvider(create: (_) => serviceLocator<DetailsBloc>()),
+        BlocProvider(create: (_) => serviceLocator<FilterPanelCubit>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
