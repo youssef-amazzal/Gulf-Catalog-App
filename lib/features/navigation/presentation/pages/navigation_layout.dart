@@ -19,7 +19,10 @@ class NavigationLayout extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
+        padding: context.responsive(
+          const EdgeInsets.only(top: 10, left: 10, right: 10),
+          lg: const EdgeInsets.only(top: 15, left: 20, right: 20),
+        ),
         child: context.responsive<Widget>(
           VerticalLayout(child: child),
           lg: HorizontalLayout(child: child),
@@ -88,6 +91,7 @@ class VerticalLayout extends StatelessWidget {
                 ],
               ),
             ),
+            const Gap(30),
             Expanded(child: child)
           ],
         ),

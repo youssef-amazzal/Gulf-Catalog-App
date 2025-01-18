@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import "package:collection/collection.dart";
-import 'package:gulf_catalog_app/core/configs/theme/app_theme.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/cross_ref.dart';
 import 'package:gulf_catalog_app/features/catalog/domain/entities/oe_ref.dart';
 import 'package:gulf_catalog_app/features/catalog/presentation/i18n/catalog.i18n.dart';

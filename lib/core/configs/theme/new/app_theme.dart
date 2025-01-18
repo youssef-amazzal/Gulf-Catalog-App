@@ -3,6 +3,7 @@ import 'package:gulf_catalog_app/core/configs/theme/new/app_colors.dart';
 import 'package:gulf_catalog_app/core/configs/theme/new/color_scheme.dart';
 import 'package:gulf_catalog_app/core/configs/theme/new/navbar_theme.dart';
 import 'package:gulf_catalog_app/core/configs/theme/new/text_theme.dart';
+import 'package:gulf_catalog_app/core/extensions/responsive/responsive.dart';
 
 class MAppTheme {
   MAppTheme._();
@@ -38,7 +39,7 @@ class MAppTheme {
               iconButtonTheme: IconButtonThemeData(
                 style: IconButton.styleFrom(
                   elevation: 0,
-                  padding: const EdgeInsets.all(10),
+                  padding: EdgeInsets.all(context.responsive(5, lg: 10)),
                   backgroundColor: Colors.transparent,
                 ),
               ),

@@ -31,6 +31,17 @@ final GoRouter appRoutes = GoRouter(navigatorKey: _rootNavigatorKey, routes: [
             builder: (context, state) => const CatalogPage(),
             routes: [
               GoRoute(
+                name: AppRoutes.filters.name,
+                path: AppRoutes.filters.path,
+                parentNavigatorKey: _rootNavigatorKey,
+                builder: (context, state) => I18n(
+                  child: Theme(
+                    data: MAppTheme.lightTheme(context),
+                    child: const CatalogFiltersPage(),
+                  ),
+                ),
+              ),
+              GoRoute(
                 path: ':id',
                 parentNavigatorKey: _rootNavigatorKey,
                 builder: (context, state) => I18n(
@@ -56,6 +67,13 @@ class AppRoutes {
   static const MRouteData catalog = (
     name: 'catalog',
     path: '/catalog',
+    idleIcon: AppVectors.outlineHome,
+    selectedIcon: AppVectors.solidHome,
+  );
+
+  static const MRouteData filters = (
+    name: 'filters',
+    path: 'filters',
     idleIcon: AppVectors.outlineHome,
     selectedIcon: AppVectors.solidHome,
   );
